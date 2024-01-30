@@ -1,5 +1,6 @@
 using System.Threading.RateLimiting;
 using Core.Configuration;
+using Core.Constants;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Options;
 
@@ -37,7 +38,7 @@ public static class ConfigureRateLimit
     public static void AddRateLimit(this IServiceCollection services)
     {
         services.AddRateLimiter(options => {
-            options.AddPolicy<string, HostRateLimiterPolicy>("host");
-        });
+            options.AddPolicy<string, HostRateLimiterPolicy>(Constants.RateLimitPolicy);            
+        });        
     }
 }

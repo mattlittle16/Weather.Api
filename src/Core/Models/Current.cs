@@ -14,10 +14,10 @@ public class Current
     public int? Sunset { get; set; }
 
     [JsonPropertyName("temp")]
-    public double? Temp { get; set; }
+    public decimal? Temp { get; set; }
 
     [JsonPropertyName("feels_like")]
-    public double? FeelsLike { get; set; }
+    public decimal? FeelsLike { get; set; }
 
     [JsonPropertyName("pressure")]
     public int? Pressure { get; set; }
@@ -26,10 +26,10 @@ public class Current
     public int? Humidity { get; set; }
 
     [JsonPropertyName("dew_point")]
-    public double? DewPoint { get; set; }
+    public decimal? DewPoint { get; set; }
 
     [JsonPropertyName("uvi")]
-    public double? Uvi { get; set; }
+    public decimal? Uvi { get; set; }
 
     [JsonPropertyName("clouds")]
     public int? Clouds { get; set; }
@@ -38,14 +38,14 @@ public class Current
     public int? Visibility { get; set; }
 
     [JsonPropertyName("wind_speed")]
-    public double? WindSpeed { get; set; }
+    public decimal? WindSpeed { get; set; }
 
     [JsonPropertyName("wind_deg")]
     public int? WindDeg { get; set; }
 
     [JsonPropertyName("wind_gust")]
-    public double? WindGust { get; set; }
+    public decimal? WindGust { get; set; }
 
     [JsonPropertyName("weather")]
-    public List<Weather> Weather { get; set; }
+    public List<WeatherDescription> Weather { get; set; }
 }

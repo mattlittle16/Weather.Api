@@ -7,4 +7,6 @@ public class EnvironmentSettings
     public int RateLimit { get; set; } = 10;
 
     public int RateLimitTimeInMinutes { get; set; } = 1;
+
+    public int DailyOpenWeatherApiLimit { get; set; } = 990;
 }

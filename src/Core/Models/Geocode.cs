@@ -8,10 +8,10 @@ public class Geocode
     public string Name { get; set; }
 
     [JsonPropertyName("lat")]
-    public string Lat { get; set; }
+    public decimal Lat { get; set; }
 
     [JsonPropertyName("lon")]
-    public string Lon { get; set; }
+    public decimal Lon { get; set; }
 
     [JsonPropertyName("country")]
     public string Country { get; set; }

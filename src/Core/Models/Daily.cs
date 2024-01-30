@@ -5,22 +5,22 @@ namespace Core.Models;
 public class Daily
 {
     [JsonPropertyName("dt")]
-    public int? Dt { get; set; }
+    public long? Dt { get; set; }
 
     [JsonPropertyName("sunrise")]
-    public int? Sunrise { get; set; }
+    public long? Sunrise { get; set; }
 
     [JsonPropertyName("sunset")]
-    public int? Sunset { get; set; }
+    public long? Sunset { get; set; }
 
     [JsonPropertyName("moonrise")]
-    public int? Moonrise { get; set; }
+    public long? Moonrise { get; set; }
 
     [JsonPropertyName("moonset")]
-    public int? Moonset { get; set; }
+    public long? Moonset { get; set; }
 
     [JsonPropertyName("moon_phase")]
-    public double? MoonPhase { get; set; }
+    public decimal? MoonPhase { get; set; }
 
     [JsonPropertyName("summary")]
     public string Summary { get; set; }
@@ -38,29 +38,29 @@ public class Daily
     public int? Humidity { get; set; }
 
     [JsonPropertyName("dew_point")]
-    public double? DewPoint { get; set; }
+    public decimal? DewPoint { get; set; }
 
     [JsonPropertyName("wind_speed")]
-    public double? WindSpeed { get; set; }
+    public decimal? WindSpeed { get; set; }
 
     [JsonPropertyName("wind_deg")]
     public int? WindDeg { get; set; }
 
     [JsonPropertyName("wind_gust")]
-    public double? WindGust { get; set; }
+    public decimal? WindGust { get; set; }
 
     [JsonPropertyName("weather")]
-    public List<Weather> Weather { get; set; }
+    public List<WeatherDescription> Weather { get; set; }
 
     [JsonPropertyName("clouds")]
     public int? Clouds { get; set; }
 
     [JsonPropertyName("pop")]
-    public double? Pop { get; set; }
+    public decimal? Pop { get; set; }
 
     [JsonPropertyName("uvi")]
-    public double? Uvi { get; set; }
+    public decimal? Uvi { get; set; }
 
     [JsonPropertyName("rain")]
-    public double? Rain { get; set; }
+    public decimal? Rain { get; set; }
 }

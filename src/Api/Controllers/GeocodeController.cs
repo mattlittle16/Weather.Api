@@ -10,22 +10,22 @@ namespace WeatherApi.Controllers;
 [ApiController]
 [Route("[controller]")]
 [EnableRateLimiting(Constants.RateLimitPolicy)]
-public class WeatherController : ControllerBase
+public class GeocodeController : ControllerBase
 {    
     private readonly ILogger<WeatherController> _logger;
     private readonly IWeatherService _weatherService;
 
-    public WeatherController(ILogger<WeatherController> logger, IWeatherService weatherService)
+    public GeocodeController(ILogger<WeatherController> logger, IWeatherService weatherService)
     {
         _logger = logger;
         _weatherService = weatherService;
     }
 
     [HttpGet]
-    [ProducesResponseType(typeof(WeatherResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(GeocodeResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status429TooManyRequests)]
-    public async Task<IActionResult> Get(string lat, string lon)
+    public async Task<IActionResult> Get(string city, string state, string postalCode)
     {              
-       return Ok(new WeatherResponse(await _weatherService.GetWeatherAsync(lat, lon)));
+       return Ok(new GeocodeResponse(await _weatherService.GetGeocodeAsync(city, state, postalCode)));
     }    
 }

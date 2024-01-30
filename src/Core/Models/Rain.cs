@@ -5,5 +5,5 @@ namespace Core.Models;
 public class Rain
 {
     [JsonPropertyName("1h")]
-    public double? _1h { get; set; }
+    public decimal? _1h { get; set; }
 }

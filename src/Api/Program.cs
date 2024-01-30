@@ -1,6 +1,7 @@
 using System.Net;
 using Api.ApplicationLogic;
 using Api.Configuration;
+using Api.Middleware;
 using Core.Configuration;
 using Core.Constants;
 using Core.Interfaces;
@@ -56,6 +57,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<DailyRequestLimitMiddleware>();
 
 app.UseCors(Constants.CORSPolicy);
 

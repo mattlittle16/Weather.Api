@@ -6,10 +6,10 @@ namespace Core.Models;
 public class WeatherRoot
 {
     [JsonPropertyName("lat")]
-    public double? Lat { get; set; }
+    public decimal? Lat { get; set; }
 
     [JsonPropertyName("lon")]
-    public double? Lon { get; set; }
+    public decimal? Lon { get; set; }
 
     [JsonPropertyName("timezone")]
     public string Timezone { get; set; }

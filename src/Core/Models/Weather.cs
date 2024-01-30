@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace Core.Models;
 
-public class Weather
+public class WeatherDescription
 {
     [JsonPropertyName("id")]
     public int? Id { get; set; }

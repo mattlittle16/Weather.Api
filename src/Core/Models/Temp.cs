@@ -5,20 +5,20 @@ namespace Core.Models;
 public class Temp
 {
     [JsonPropertyName("day")]
-    public double? Day { get; set; }
+    public decimal? Day { get; set; }
 
     [JsonPropertyName("min")]
-    public double? Min { get; set; }
+    public decimal? Min { get; set; }
 
     [JsonPropertyName("max")]
-    public double? Max { get; set; }
+    public decimal? Max { get; set; }
 
     [JsonPropertyName("night")]
-    public double? Night { get; set; }
+    public decimal? Night { get; set; }
 
     [JsonPropertyName("eve")]
-    public double? Eve { get; set; }
+    public decimal? Eve { get; set; }
 
     [JsonPropertyName("morn")]
-    public double? Morn { get; set; }
+    public decimal? Morn { get; set; }
 }
