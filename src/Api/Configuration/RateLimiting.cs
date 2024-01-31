@@ -1,6 +1,8 @@
+using System.Text.Json;
 using System.Threading.RateLimiting;
 using Core.Configuration;
 using Core.Constants;
+using Core.ResponseModels;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Options;
 
@@ -29,6 +31,9 @@ public class HostRateLimiterPolicy : IRateLimiterPolicy<string>
     (context, _) =>
     {
         context.HttpContext.Response.StatusCode = 429;
+        context.HttpContext.Response.ContentType = "text/plain";   
+        context.HttpContext.Response.WriteAsync(JsonSerializer.Serialize(new ExceptionResponse { Message = "Too many requests" }));
+
         return new ValueTask();
     };
 }

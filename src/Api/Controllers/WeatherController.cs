@@ -23,7 +23,7 @@ public class WeatherController : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(typeof(WeatherResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status429TooManyRequests)]
+    [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status429TooManyRequests)]
     public async Task<IActionResult> Get(string lat, string lon)
     {              
        return Ok(new WeatherResponse(await _weatherService.GetWeatherAsync(lat, lon)));

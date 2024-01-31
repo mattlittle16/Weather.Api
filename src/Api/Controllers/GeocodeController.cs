@@ -23,7 +23,7 @@ public class GeocodeController : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(typeof(GeocodeResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status429TooManyRequests)]
+    [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status429TooManyRequests)]
     public async Task<IActionResult> Get(string city, string state, string postalCode)
     {              
        return Ok(new GeocodeResponse(await _weatherService.GetGeocodeAsync(city, state, postalCode)));
