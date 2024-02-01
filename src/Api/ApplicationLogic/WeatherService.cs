@@ -28,7 +28,7 @@ public class WeatherService : IWeatherService
 
         var geocode = await _openWeatherApi.GetGeocodeAsync(city, state, postalCode);
 
-        _cache.Set((city+state+postalCode).GetHashString(), geocode, TimeSpan.FromMinutes(1));
+        _cache.Set((city+state+postalCode).GetHashString(), geocode, TimeSpan.FromHours(24));
 
         return geocode;
     }
@@ -44,7 +44,7 @@ public class WeatherService : IWeatherService
 
         var weather = await _openWeatherApi.GetWeatherInfoAsync(latitude, longitude);
 
-        _cache.Set(key, weather, TimeSpan.FromMinutes(1));
+        _cache.Set(key, weather, TimeSpan.FromMinutes(10));
 
         return weather;
     }
