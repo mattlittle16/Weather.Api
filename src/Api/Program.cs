@@ -62,7 +62,7 @@ app.UseMiddleware<DailyRequestLimitMiddleware>();
 
 app.UseCors(Constants.CORSPolicy);
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
