@@ -6,7 +6,10 @@ using Core.Configuration;
 using Core.Constants;
 using Core.Interfaces;
 using Infrastructure.ExternalServices;
+using Infrastructure.MySql;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,6 +47,11 @@ builder.Services.AddHttpClient(Constants.OpenWeatherApi, options =>
 builder.Services.AddMemoryCache();
 
 builder.Services.AddRateLimit();
+
+var conString = builder.Configuration.GetConnectionString("WeatherDb");
+builder.Services.AddDbContextPool<WeatherDbContext>(
+      options => options.UseMySql(conString, ServerVersion.Create(Version.Parse("8.3.0"), ServerType.MySql), b => b.MigrationsAssembly("Infrastructure"))
+);
 
 //add services
 builder.Services.AddScoped<IOpenWeatherApi, OpenWeatherApi>();
