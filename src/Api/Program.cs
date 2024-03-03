@@ -4,9 +4,12 @@ using Api.Configuration;
 using Api.Middleware;
 using Core.Configuration;
 using Core.Constants;
+using Core.Entities;
 using Core.Interfaces;
 using Infrastructure.ExternalServices;
+using Infrastructure.Interfaces;
 using Infrastructure.MySql;
+using Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
@@ -56,6 +59,7 @@ builder.Services.AddDbContextPool<WeatherDbContext>(
 //add services
 builder.Services.AddScoped<IOpenWeatherApi, OpenWeatherApi>();
 builder.Services.AddScoped<IWeatherService, WeatherService>();
+builder.Services.AddScoped<IGenericRepository<Base>, GenericRepository<Base>>();
 
 var app = builder.Build();
 

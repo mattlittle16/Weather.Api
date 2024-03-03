@@ -1,13 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Core.Etities;
+namespace Core.Entities;
 
-public class Log 
+public class Log : Base
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public Guid LogId { get; set; }
     [Required]
     public Guid LogTypeId { get; set; }
     [Required]
@@ -15,7 +12,7 @@ public class Log
     [Required]
     public DateTimeOffset CreatedDate { get; set; }
 
-    [ForeignKey("LogTypeId")]
+    [ForeignKey("Id")]
     public LogType LogType { get; set;}
 }
 
