@@ -12,7 +12,7 @@ public class Log : Base
     [Required]
     public DateTimeOffset CreatedDate { get; set; }
 
-    [ForeignKey("Id")]
+    [ForeignKey("LogTypeId")]
     public LogType LogType { get; set;}
 }
 

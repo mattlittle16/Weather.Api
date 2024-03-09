@@ -13,6 +13,8 @@ using Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using Infrastructure.Logger;
+using Api.Startup;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,8 +49,9 @@ builder.Services.AddHttpClient(Constants.OpenWeatherApi, options =>
         AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate | DecompressionMethods.Brotli
     });
 
-builder.Services.AddMemoryCache();
 
+//caching and rate limiting
+builder.Services.AddMemoryCache();
 builder.Services.AddRateLimit();
 
 var conString = builder.Configuration.GetConnectionString("WeatherDb");
@@ -61,7 +64,16 @@ builder.Services.AddScoped<IOpenWeatherApi, OpenWeatherApi>();
 builder.Services.AddScoped<IWeatherService, WeatherService>();
 builder.Services.AddScoped<IGenericRepository<Base>, GenericRepository<Base>>();
 
+//Logging
+builder.Services.AddSingleton<ILoggerProvider, DbLoggerProvider>();
+
 var app = builder.Build();
+
+//seed the db 
+if (app.Environment.IsDevelopment())
+{
+    app.UseItToSeedSqlServer(); 
+}
 
 // Configure the HTTP request pipeline.f
 if (app.Environment.IsDevelopment())
@@ -70,16 +82,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+//middleware
 app.UseMiddleware<DailyRequestLimitMiddleware>();
 
+//cors
 app.UseCors(Constants.CORSPolicy);
 
 //app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.UseRateLimiter();
 
 app.Run();

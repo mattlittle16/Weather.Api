@@ -1,16 +1,17 @@
+using System.Linq.Expressions;
 using Core.Entities;
 
 namespace Infrastructure.Interfaces;
 
-public interface IGenericRepository <TEntity> where TEntity : Base
+public interface IGenericRepository <T> where T : Base
 {
-    IQueryable<TEntity> GetAll();
+    IQueryable<T> GetAll(Expression<Func<T, bool>> predicate = null);
 
-    Task<TEntity> GetById(Guid id);
+    Task<T> GetById(Guid id);
 
-    Task Create(TEntity entity);
+    Task Create(T entity);
 
-    Task Update(Guid id, TEntity entity);
+    Task Update(Guid id, T entity);
 
     Task Delete(Guid id);
 }

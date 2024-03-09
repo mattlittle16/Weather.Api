@@ -40,6 +40,8 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("LogTypeId");
+
                     b.ToTable("Log");
                 });
 
@@ -61,7 +63,7 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("Core.Entities.LogType", "LogType")
                         .WithMany()
-                        .HasForeignKey("Id")
+                        .HasForeignKey("LogTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

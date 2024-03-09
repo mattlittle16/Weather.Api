@@ -1,4 +1,6 @@
 using Core.Constants;
+using Core.Entities;
+using Core.Enums;
 using Core.Interfaces;
 using Core.Models;
 using Core.ResponseModels;
@@ -26,6 +28,7 @@ public class WeatherController : ControllerBase
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status429TooManyRequests)]
     public async Task<IActionResult> Get(string lat, string lon)
     {              
+        _logger.LogInformation("test", LogTypeEnum.Request);
        return Ok(new WeatherResponse(await _weatherService.GetWeatherAsync(lat, lon)));
     }    
 }
