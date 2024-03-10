@@ -69,15 +69,10 @@ builder.Services.AddSingleton<ILoggerProvider, DbLoggerProvider>();
 
 var app = builder.Build();
 
-//seed the db 
-if (app.Environment.IsDevelopment())
+// dev stuff
+if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName.ToLower() == "docker")
 {
     app.UseItToSeedSqlServer(); 
-}
-
-// Configure the HTTP request pipeline.f
-if (app.Environment.IsDevelopment())
-{
     app.UseSwagger();
     app.UseSwaggerUI();
 }
