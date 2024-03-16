@@ -8,6 +8,10 @@ public class Log : Base
     [Required]
     public Guid LogTypeId { get; set; }
     [Required]
+    public string EventId { get; set; }
+    [Required]
+    public string EventName { get; set; }
+    [Required]
     public string Message { get; set; }
     [Required]
     public DateTimeOffset CreatedDate { get; set; }

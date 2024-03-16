@@ -46,17 +46,37 @@ public class DbLogger : ILogger
             FieldInfo props = fieldsInfo.FirstOrDefault(o => o.Name == "_values");
             object[] values = (object[])props?.GetValue(state);
 
+        
             var logType = LogTypeEnum.General;
+            
+            if (values?.Length > 0)
+            {
+                try 
+                {
+                    logType = (LogTypeEnum)values[0];
+                }
+                catch
+                {}
+            }
+
             var logTypeId = string.Empty;
             
-            var message = $"{JsonSerializer.Serialize(eventId)} || ";
-            if (exception != null)
+            var message = "";
+
+            if (formatter != null)
             {
-                message += JsonSerializer.Serialize(exception);
+                message += formatter(state, exception);
             }
             else 
             {
-                message += JsonSerializer.Serialize(state);
+                if (exception != null)
+                {
+                    message += JsonSerializer.Serialize(exception);
+                }
+                else 
+                {
+                    message += JsonSerializer.Serialize(state);
+                }
             }
 
             try 
@@ -78,13 +98,15 @@ public class DbLogger : ILogger
 
                     command.Connection = connection;  
                     command.CommandType = System.Data.CommandType.Text;  
-                    command.CommandText = string.Format(@"INSERT INTO Log (Id, LogTypeId, Message, CreatedDate) 
-                    VALUES (@Id, @LogTypeId, @Message, @CreatedDate)");  
+                    command.CommandText = string.Format(@"INSERT INTO Log (Id, LogTypeId, Message, CreatedDate, EventId, EventName) 
+                    VALUES (@Id, @LogTypeId, @Message, @CreatedDate, @EventId, @EventName)");  
 
                     command.Parameters.Add(new MySqlParameter("@Id", Guid.NewGuid()));
                     command.Parameters.Add(new MySqlParameter("@LogTypeId", logTypeId));
                     command.Parameters.Add(new MySqlParameter("@Message", message));
                     command.Parameters.Add(new MySqlParameter("@CreatedDate", DateTimeOffset.UtcNow));
+                    command.Parameters.Add(new MySqlParameter("@EventId", eventId.Id));
+                    command.Parameters.Add(new MySqlParameter("@EventName", eventId.Name ?? "No Event Name"));
 
                     command.ExecuteNonQuery();  
                 }  
