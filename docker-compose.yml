@@ -2,7 +2,6 @@ version: "3.8"
 # https://docs.docker.com/compose/
 volumes:
   datafiles:
-    driver: local
 
 services:
   #DataBase Service
@@ -11,11 +10,12 @@ services:
     image: mysql:8.3.0
     #Map port 3306 on the mysql container to port 3306 in the host
     ports:
-      - "3307:3306"
+      - "3306:3306"
     #Specify where the persisted Data should be stored
     volumes:
-      - /Users/mattlittle/SourceControl/mysql_datafiles:/var/lib/mysql
-      #- "~/sql-scripts/setup.sql:/docker-entrypoint-initdb.d/1.sql"
+      #- /Users/mattlittle/SourceControl/mysql_datafiles:/var/lib/mysql
+      - datafiles:/var/lib/mysql
+      - ./src/Infrastructure/MySql/BaseChange.sql:/docker-entrypoint-initdb.d/1.sql
     restart: always
     #Specify Environment Variables for mysql
     environment: 
@@ -50,6 +50,12 @@ services:
       # a volume is a directory that is shared between the host and the container
       # dir location of cert on host. (ro stands for read only permissions to volume directory)
       #- ~/.aspnet/https:/https:ro
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 5
+        window: 120s
     depends_on: 
       mysqldb:
         condition: service_healthy

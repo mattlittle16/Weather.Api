@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(WeatherDbContext))]
-    [Migration("20240309134344_ForeignKeyChange")]
-    partial class ForeignKeyChange
+    [Migration("20240518145338_BaseChange")]
+    partial class BaseChange
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,6 +33,14 @@ namespace Infrastructure.Migrations
 
                     b.Property<DateTimeOffset>("CreatedDate")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<string>("EventId")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("EventName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<Guid>("LogTypeId")
                         .HasColumnType("char(36)");

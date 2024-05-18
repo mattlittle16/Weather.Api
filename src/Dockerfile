@@ -8,7 +8,7 @@ COPY ["Infrastructure/", "Infrastructure/"]
 
 RUN dotnet restore "Api/Api.csproj"
 
-RUN dotnet publish "Api/Api.csproj" -c Release -o out 
+RUN dotnet publish "Api/Api.csproj" -c Debug -o out 
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 as runtime 
 WORKDIR /app 
