@@ -47,7 +47,7 @@ public class DbLogger : ILogger
             object[] values = (object[])props?.GetValue(state);
 
         
-            var logType = LogTypeEnum.General;
+            var logType = LogTypeEnum.System;
             
             if (values?.Length > 0)
             {

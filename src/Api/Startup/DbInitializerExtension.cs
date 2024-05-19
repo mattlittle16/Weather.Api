@@ -1,4 +1,6 @@
+using Core.Configuration;
 using Infrastructure.MySql;
+using Microsoft.Extensions.Options;
 
 namespace Api.Startup;
 

@@ -8,5 +8,7 @@ public class LogType : Base
 {
     [Required]
     public LogTypeEnum Type { get; set; }
+
+    public string Description { get; set; } 
 }
 

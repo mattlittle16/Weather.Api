@@ -11,6 +11,7 @@ ALTER DATABASE CHARACTER SET utf8mb4;
 CREATE TABLE `LogType` (
     `Id` char(36) COLLATE ascii_general_ci NOT NULL,
     `Type` int NOT NULL,
+    `Description` longtext CHARACTER SET utf8mb4 NOT NULL,
     CONSTRAINT `PK_LogType` PRIMARY KEY (`Id`)
 ) CHARACTER SET=utf8mb4;
 
@@ -28,7 +29,7 @@ CREATE TABLE `Log` (
 CREATE INDEX `IX_Log_LogTypeId` ON `Log` (`LogTypeId`);
 
 INSERT INTO `__EFMigrationsHistory` (`MigrationId`, `ProductVersion`)
-VALUES ('20240518145338_BaseChange', '8.0.2');
+VALUES ('20240519125621_BaseChange', '8.0.2');
 
 COMMIT;
 

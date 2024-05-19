@@ -13,7 +13,7 @@ namespace WeatherApi.Controllers;
 [Route("[controller]")]
 [EnableRateLimiting(Constants.RateLimitPolicy)]
 public class WeatherController : ControllerBase
-{    
+{
     private readonly ILogger<WeatherController> _logger;
     private readonly IWeatherService _weatherService;
 
@@ -27,8 +27,8 @@ public class WeatherController : ControllerBase
     [ProducesResponseType(typeof(WeatherResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status429TooManyRequests)]
     public async Task<IActionResult> Get(string lat, string lon)
-    {              
-        _logger.LogInformation("test", LogTypeEnum.Request);
-       return Ok(new WeatherResponse(await _weatherService.GetWeatherAsync(lat, lon)));
-    }    
+    {
+        _logger.LogInformation($"Weather request {lat} - {lon}");
+        return Ok(new WeatherResponse(await _weatherService.GetWeatherAsync(lat, lon)));
+    }
 }
