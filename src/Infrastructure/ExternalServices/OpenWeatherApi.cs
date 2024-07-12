@@ -1,5 +1,5 @@
 using System.Text.Json;
-using System.Text.Json.Serialization;
+using System.Web;
 using Core.Configuration;
 using Core.Constants;
 using Core.Interfaces;
@@ -24,9 +24,10 @@ public class OpenWeatherApi : IOpenWeatherApi
 
     public async Task<Geocode> GetGeocodeAsync(string city, string state, string postalCode)
     {
-        var url = $"geo/1.0/direct?q={city},{state},{postalCode}&limit=1&appid={_environmentSettings.OpenWeatherApiKey}";
-        var response = await _httpClient.GetAsync(url);
-
+        var url = "geo/1.0/direct?";
+        var urlParams = HttpUtility.UrlEncode($"q={city},{state},{postalCode}&limit=1&appid={_environmentSettings.OpenWeatherApiKey}");        
+        var response = await _httpClient.GetAsync(url+urlParams);
+        
         if (response.IsSuccessStatusCode)
         {
             var geocodeList = JsonSerializer.Deserialize<List<Geocode>>(await response.Content.ReadAsStringAsync());

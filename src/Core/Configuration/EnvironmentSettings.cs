@@ -3,6 +3,8 @@ namespace Core.Configuration;
 public class EnvironmentSettings 
 {
     public string OpenWeatherApiKey { get; set; }
+    
+    public string OpenWeatherApiBaseUrl { get; set;}
 
     public int RateLimit { get; set; } = 50;
 

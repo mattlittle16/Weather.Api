@@ -1,8 +1,6 @@
 using Core.Entities;
 using Core.Enums;
 using Infrastructure.MySql;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 namespace Api.Startup;
 

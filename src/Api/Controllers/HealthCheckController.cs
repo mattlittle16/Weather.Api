@@ -1,11 +1,9 @@
 using Core.Constants;
 using Core.Interfaces;
-using Core.Models;
-using Core.ResponseModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 
-namespace WeatherApi.Controllers;
+namespace Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]

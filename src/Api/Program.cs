@@ -27,7 +27,6 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.Configure<EnvironmentSettings>(builder.Configuration.GetSection("AppSettings"));
 
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(Constants.CORSPolicy,
@@ -40,9 +39,13 @@ builder.Services.AddCors(options =>
         });
 });
 
+
+var appSettings = builder.Configuration.GetSection("AppSettings");
+var envSettings = new EnvironmentSettings();
+appSettings.Bind(envSettings);
 builder.Services.AddHttpClient(Constants.OpenWeatherApi, options =>
     {
-        options.BaseAddress = new Uri("http://api.openweathermap.org");
+        options.BaseAddress = new Uri(envSettings.OpenWeatherApiBaseUrl);
     })
     .ConfigurePrimaryHttpMessageHandler(x => new HttpClientHandler
     {

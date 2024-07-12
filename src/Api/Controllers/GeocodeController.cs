@@ -1,22 +1,21 @@
 using Core.Constants;
 using Core.Enums;
 using Core.Interfaces;
-using Core.Models;
 using Core.ResponseModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 
-namespace WeatherApi.Controllers;
+namespace Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
 [EnableRateLimiting(Constants.RateLimitPolicy)]
 public class GeocodeController : ControllerBase
 {
-    private readonly ILogger<WeatherController> _logger;
+    private readonly ILogger<GeocodeController> _logger;
     private readonly IWeatherService _weatherService;
 
-    public GeocodeController(ILogger<WeatherController> logger, IWeatherService weatherService)
+    public GeocodeController(ILogger<GeocodeController> logger, IWeatherService weatherService)
     {
         _logger = logger;
         _weatherService = weatherService;

@@ -62,6 +62,16 @@ services:
     networks:
       - my-network
 
+  #Wiremock
+  wiremock:
+    build:
+      context: .
+      dockerfile: ./src/Wiremock/Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - my-network
+
 networks:
   my-network:
      driver: bridge
