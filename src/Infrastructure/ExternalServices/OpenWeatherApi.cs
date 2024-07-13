@@ -1,9 +1,11 @@
+using System.Net.Sockets;
 using System.Text.Json;
 using System.Web;
 using Core.Configuration;
 using Core.Constants;
 using Core.Interfaces;
 using Core.Models;
+using Infrastructure.Interfaces;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
@@ -12,21 +14,19 @@ namespace Infrastructure.ExternalServices;
 public class OpenWeatherApi : IOpenWeatherApi
 {
     private EnvironmentSettings _environmentSettings { get; set; } 
-    private readonly HttpClient _httpClient;
+    private IOpenWeatherApiRefit _client { get; set; }
     private readonly ILogger<OpenWeatherApi> _logger;
 
-    public OpenWeatherApi(IOptions<EnvironmentSettings> options, IHttpClientFactory httpClientFactory, ILogger<OpenWeatherApi> logger)
+    public OpenWeatherApi(IOptions<EnvironmentSettings> options, IOpenWeatherApiRefit client, ILogger<OpenWeatherApi> logger)
     {
         _environmentSettings = options.Value;
-        _httpClient = httpClientFactory.CreateClient(Constants.OpenWeatherApi);
+        _client = client;
         _logger = logger;
     }
 
     public async Task<Geocode> GetGeocodeAsync(string city, string state, string postalCode)
-    {
-        var url = "geo/1.0/direct?";
-        var urlParams = HttpUtility.UrlEncode($"q={city},{state},{postalCode}&limit=1&appid={_environmentSettings.OpenWeatherApiKey}");        
-        var response = await _httpClient.GetAsync(url+urlParams);
+    {        
+        var response = await _client.GetGeocodeAsync(city, state, postalCode, _environmentSettings.OpenWeatherApiKey);
         
         if (response.IsSuccessStatusCode)
         {
@@ -50,9 +50,8 @@ public class OpenWeatherApi : IOpenWeatherApi
     }
 
     public async Task<WeatherRoot> GetWeatherInfoAsync(string latitude, string longitude)
-    {
-        var url = $"data/3.0/onecall?lat={latitude}&lon={longitude}&units=imperial&appid={_environmentSettings.OpenWeatherApiKey}";
-        var response = await _httpClient.GetAsync(url);
+    {        
+        var response = await _client.GetWeatherAsync(latitude, longitude, _environmentSettings.OpenWeatherApiKey);
 
         if (response.IsSuccessStatusCode)
         {

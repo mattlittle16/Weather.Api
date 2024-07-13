@@ -10,6 +10,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="8.0.0" />
     <PackageReference Include="microsoft.extensions.http" Version="8.0.0" />
+    <PackageReference Include="refit" Version="7.1.2" />
+    <PackageReference Include="refit.httpclientfactory" Version="7.1.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

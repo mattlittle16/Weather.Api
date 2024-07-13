@@ -42,7 +42,7 @@ namespace Wiremock.Mocks
                     BodyAsJson = new List<object> { 
                         new {
                            name = "Cumming",
-                           lat = 84.1402M, 
+                           lat = -84.1402M, 
                            lon = 34.2073M, 
                            country = "USA",
                            state = "GA"

@@ -15,6 +15,8 @@ using Microsoft.Extensions.Options;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Infrastructure.Logger;
 using Api.Startup;
+using Refit;
+using Microsoft.AspNetCore.Mvc.Routing;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,14 +45,7 @@ builder.Services.AddCors(options =>
 var appSettings = builder.Configuration.GetSection("AppSettings");
 var envSettings = new EnvironmentSettings();
 appSettings.Bind(envSettings);
-builder.Services.AddHttpClient(Constants.OpenWeatherApi, options =>
-    {
-        options.BaseAddress = new Uri(envSettings.OpenWeatherApiBaseUrl);
-    })
-    .ConfigurePrimaryHttpMessageHandler(x => new HttpClientHandler
-    {
-        AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate | DecompressionMethods.Brotli
-    });
+builder.Services.AddRefitClient<IOpenWeatherApiRefit>().ConfigureHttpClient(options => options.BaseAddress = new Uri(envSettings.OpenWeatherApiBaseUrl));
 
 
 //caching and rate limiting
