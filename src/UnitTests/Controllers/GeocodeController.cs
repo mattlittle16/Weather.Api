@@ -7,14 +7,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Api.Controllers;
+using AutoFixture;
 
-namespace UnitTests;
+namespace UnitTests.Controllers;
 
 public class GeocodeControllerTests
 {
     [Theory]
     [AutoMoqData]
-    public void Get_ReturnsValidGeocode(
+    public async Task Get_ReturnsValidGeocode
+    (
         [Frozen] Mock<IWeatherService> weatherServiceMock, 
         [Frozen] Mock<ILogger<GeocodeController>> loggerMock,
         string city, 
@@ -28,10 +30,10 @@ public class GeocodeControllerTests
         var controller = new GeocodeController(loggerMock.Object, weatherServiceMock.Object);
         
         //Act 
-        var response = controller.Get(city, state, postalCode);
+        var response = await controller.Get(city, state, postalCode);
 
         //Assert
-        var result = response.Result;
+        var result = response;
 
         Assert.NotNull(result);
         Assert.True(((OkObjectResult)result).StatusCode == 200);

@@ -22,18 +22,6 @@ foreach (var mock in mocks)
     mockConfig.RegisterMocks(server);
 }
 
-// JsonConvert.DefaultSettings = () => new JsonSerializerSettings
-// {
-//     ContractResolver = new DefaultContractResolver
-//     {
-//         NamingStrategy = new CamelCaseNamingStrategy()
-//     },
-//     Converters = new List<Newtonsoft.Json.JsonConverter>
-//     {
-//         new StringEnumConverter()
-//     }
-// };
-
 while (true)
 {
     Console.WriteLine($"{DateTime.UtcNow} WireMock.Net server running");

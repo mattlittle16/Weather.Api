@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <PackageReference Include="Wiremock.net" Version="1.5.60" />
+    <PackageReference Include="AutoFixture" Version="4.18.1" />
+    <PackageReference Include="autofixture.AutoMoq" Version="4.18.1" />
   </ItemGroup>
 
   <ItemGroup>
