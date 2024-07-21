@@ -17,6 +17,10 @@ using Infrastructure.Logger;
 using Api.Startup;
 using Refit;
 using Microsoft.AspNetCore.Mvc.Routing;
+using FluentValidation;
+using System.Reflection;
+using Api.Validators;
+using Core.RequestModels;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -61,6 +65,8 @@ builder.Services.AddDbContextPool<WeatherDbContext>(
 builder.Services.AddScoped<IOpenWeatherApi, OpenWeatherApi>();
 builder.Services.AddScoped<IWeatherService, WeatherService>();
 builder.Services.AddScoped<IGenericRepository<Base>, GenericRepository<Base>>();
+builder.Services.AddScoped<IValidator<WeatherRequestModel>, WeatherRequestValidator>();
+builder.Services.AddScoped<IValidator<GeocodeRequestModel>, GeocodeRequestValidator>();
 
 //Logging
 builder.Services.AddSingleton<ILoggerProvider, DbLoggerProvider>();
