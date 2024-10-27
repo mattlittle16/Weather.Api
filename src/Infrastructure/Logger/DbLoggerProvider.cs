@@ -1,6 +1,3 @@
-using Core.Entities;
-using Infrastructure.Interfaces;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 

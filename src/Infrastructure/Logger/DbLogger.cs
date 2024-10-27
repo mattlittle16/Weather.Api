@@ -1,9 +1,6 @@
 using System.Reflection;
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using Core.Entities;
 using Core.Enums;
-using Infrastructure.Interfaces;
 using Microsoft.Extensions.Logging;
 using MySqlConnector;
 

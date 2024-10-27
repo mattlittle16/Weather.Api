@@ -1,6 +1,3 @@
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
 using WireMock.Logging;
 using WireMock.Settings;
 using WireMock.Server;

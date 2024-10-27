@@ -1,12 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Options;
 using Xunit;
 using FluentAssertions;
-using Microsoft.VisualBasic;
 
 namespace ServiceTests.Controllers
 {

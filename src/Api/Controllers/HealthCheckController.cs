@@ -16,7 +16,7 @@ public class HealthCheckController : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> Get()
+    public IActionResult Get()
     {              
        return Ok();
     }    

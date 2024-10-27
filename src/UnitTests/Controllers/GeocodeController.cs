@@ -1,8 +1,6 @@
 using AutoFixture.Xunit2;
-using Castle.Core.Logging;
 using Core.Interfaces;
 using Core.Models;
-using Core.ResponseModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;

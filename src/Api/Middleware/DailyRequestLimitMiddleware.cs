@@ -1,7 +1,5 @@
 using System.Text.Json;
 using Core.Configuration;
-using Core.Constants;
-using Core.Interfaces;
 using Core.ResponseModels;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;

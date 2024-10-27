@@ -3,8 +3,6 @@ using System.Net;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
-using Xunit.Abstractions;
-using Xunit.DependencyInjection;
 
 [assembly: CollectionBehavior(DisableTestParallelization = true)]
 namespace ServiceTests

@@ -7,7 +7,6 @@ using Core.ResponseModels;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
-using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Api.Controllers;
 
@@ -37,7 +36,7 @@ public class GeocodeController : ControllerBase
 
         if (validatorResult.IsValid)
         {
-            return Ok(new GeocodeResponse(await _weatherService.GetGeocodeAsync(requestModel.City, requestModel.State, requestModel.PostalCode)));
+            return Ok(new GeocodeResponse(await _weatherService.GetGeocodeAsync(requestModel.City!, requestModel.State!, requestModel.PostalCode!)));
         }
         else 
         {

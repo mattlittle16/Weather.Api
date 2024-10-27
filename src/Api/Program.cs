@@ -1,4 +1,3 @@
-using System.Net;
 using Api.ApplicationLogic;
 using Api.Configuration;
 using Api.Middleware;
@@ -11,14 +10,11 @@ using Infrastructure.Interfaces;
 using Infrastructure.MySql;
 using Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Infrastructure.Logger;
 using Api.Startup;
 using Refit;
-using Microsoft.AspNetCore.Mvc.Routing;
 using FluentValidation;
-using System.Reflection;
 using Api.Validators;
 using Core.RequestModels;
 

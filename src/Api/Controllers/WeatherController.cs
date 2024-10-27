@@ -1,4 +1,3 @@
-using Api.Validators;
 using Core.Constants;
 using Core.Interfaces;
 using Core.RequestModels;
@@ -7,7 +6,6 @@ using Core.Extensions;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
-using Refit;
 
 namespace Api.Controllers;
 
@@ -37,7 +35,7 @@ public class WeatherController : ControllerBase
 
         if (validatorResult.IsValid)
         {
-            return Ok(new WeatherResponse(await _weatherService.GetWeatherAsync(requestModel.Lat, requestModel.Lon)));
+            return Ok(new WeatherResponse(await _weatherService.GetWeatherAsync(requestModel.Lat!, requestModel.Lon!)));
         }
         else 
         {
