@@ -1,0 +1,80 @@
+# version: "3.8"
+# https://docs.docker.com/compose/
+volumes:
+  datafiles:
+
+services:
+  #DataBase Service
+  mysqldb:
+    #Pull the latest mysql image
+    image: mysql:8.3.0
+    #Map port 3306 on the mysql container to port 3306 in the host
+    ports:
+      - "3306:3306"
+    #Specify where the persisted Data should be stored
+    volumes:
+      #- /Users/mattlittle/SourceControl/mysql_datafiles:/var/lib/mysql
+      - datafiles:/var/lib/mysql
+      - ./src/Infrastructure/MySql/BaseChange.sql:/docker-entrypoint-initdb.d/1.sql
+    restart: always
+    #Specify Environment Variables for mysql
+    environment: 
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: webuser
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: WeatherDb
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-uroot", "-ppass"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    networks:
+      - my-network
+
+  # service images to be be created
+  api: 
+    build: src/
+    ports:
+      # list of port mappings
+      - 80:80
+      #- 8081:8081
+    environment:
+      # list of environment variables within the container
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_URLS=http://+:80;
+      #- DBHOST=database
+      # - ASPNETCORE_URLS=http://+:8080;https://+:8081
+      # - ASPNETCORE_Kestrel__Certificates__Default__Password=Password
+      # - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+    #volumes:
+      # a volume is a directory that is shared between the host and the container
+      # dir location of cert on host. (ro stands for read only permissions to volume directory)
+      #- ~/.aspnet/https:/https:ro
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 5
+        window: 120s
+    depends_on: 
+      mysqldb:
+        condition: service_healthy
+    networks:
+      - my-network
+
+  #Wiremock
+  wiremock:
+    build:
+      context: .
+      dockerfile: ./src/Wiremock/Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - my-network
+
+networks:
+  my-network:
+     driver: bridge
+
+#dev-certs https --clean  
+#dotnet dev-certs https --trust -ep ~/.aspnet/https/aspnetapp.pfx -p Password;    

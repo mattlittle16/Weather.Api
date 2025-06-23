@@ -1,0 +1,3 @@
+**/appsettings.json  filter=git-crypt diff=git-crypt
+**/appsettings.Development.json  filter=git-crypt diff=git-crypt
+**/appsettings.Docker.json	 filter=git-crypt diff=git-crypt
