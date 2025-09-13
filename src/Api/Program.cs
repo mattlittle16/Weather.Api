@@ -65,9 +65,20 @@ builder.Services.AddScoped<IValidator<WeatherRequestModel>, WeatherRequestValida
 builder.Services.AddScoped<IValidator<GeocodeRequestModel>, GeocodeRequestValidator>();
 
 //Logging
-builder.Services.AddSingleton<ILoggerProvider, DbLoggerProvider>();
+// Temporarily disable DB logging to fix bootstrap issue
+// builder.Services.AddSingleton<ILoggerProvider, DbLoggerProvider>();
 
 var app = builder.Build();
+
+// Run migrations on startup for Production/Docker environments
+if (app.Environment.IsProduction() || app.Environment.EnvironmentName.ToLower() == "docker")
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var dbContext = scope.ServiceProvider.GetRequiredService<WeatherDbContext>();
+        dbContext.Database.Migrate();
+    }
+}
 
 // dev stuff
 if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName.ToLower() == "docker")
