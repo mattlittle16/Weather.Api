@@ -75,6 +75,7 @@ app.UseSerilogRequestLogging(options =>
 });
 
 app.UseMiddleware<ExceptionMiddleware>();
+app.UseMiddleware<ApiKeyMiddleware>();
 
 // dev stuff
 if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName.ToLower() == "docker")
