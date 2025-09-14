@@ -1,6 +1,8 @@
 using Core.Configuration;
 using Core.Models;
 using Microsoft.Extensions.Options;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Api.Middleware;
 
@@ -10,18 +12,29 @@ public class ApiKeyMiddleware(RequestDelegate next, IOptions<EnvironmentSettings
 
     public async Task Invoke(HttpContext context)
     {
-        var exceptionMessage = string.Empty;
         var apiKey = configuration.Value.XApiKey;
 
         if (!context.Request.Headers.TryGetValue(APIKEYNAME, out var extractedApiKey))
-            exceptionMessage = "API Key was not provided.";
-            
-        if (!apiKey.Equals(extractedApiKey))
-            exceptionMessage = "API Key is not valid.";
+        {
+            throw new FriendlyException("Forbidden", 401, "API Key was not provided.");
+        }
 
-        if (!string.IsNullOrWhiteSpace(exceptionMessage)) 
-            throw new FriendlyException("Forbidden", 401, exceptionMessage);
+        if (!IsValidApiKey(apiKey, extractedApiKey!))
+        {
+            throw new FriendlyException("Forbidden", 401, "API Key is not valid.");
+        }
 
         await next(context);
+    }
+
+    private static bool IsValidApiKey(string expectedKey, string providedKey)
+    {
+        if (string.IsNullOrEmpty(expectedKey) || string.IsNullOrEmpty(providedKey))
+            return false;
+
+        var expectedBytes = Encoding.UTF8.GetBytes(expectedKey);
+        var providedBytes = Encoding.UTF8.GetBytes(providedKey);
+
+        return CryptographicOperations.FixedTimeEquals(expectedBytes, providedBytes);
     }
 }
