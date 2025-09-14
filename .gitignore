@@ -126,6 +126,8 @@ ipch/
 $tf/
 
 .github/memory_bank/
+terraform/.terraform/
+
 
 # Guidance Automation Toolkit
 *.gpState

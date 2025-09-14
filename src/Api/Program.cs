@@ -74,8 +74,10 @@ app.UseSerilogRequestLogging(options =>
     };
 });
 
+//middleware
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseMiddleware<ApiKeyMiddleware>();
+app.UseMiddleware<DailyRequestLimitMiddleware>();
 
 // dev stuff
 if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName.ToLower() == "docker")
@@ -84,13 +86,8 @@ if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName.ToLower()
     app.UseSwaggerUI();
 }
 
-//middleware
-app.UseMiddleware<DailyRequestLimitMiddleware>();
-
 //cors
 app.UseCors(Constants.CORSPolicy);
-
-//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 app.MapControllers();

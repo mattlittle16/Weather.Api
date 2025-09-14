@@ -1,5 +1,6 @@
 using System.Text.Json;
 using Core.Configuration;
+using Core.Models;
 using Core.ResponseModels;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
@@ -33,15 +34,11 @@ public class DailyRequestLimitMiddleware
             _cache.Set(cacheKey, hits, TimeSpan.FromHours(24));
         }
 
-        if (hits == _settings.DailyOpenWeatherApiLimit) 
+        if (hits == _settings.DailyOpenWeatherApiLimit)
         {
-            context.Response.StatusCode = StatusCodes.Status429TooManyRequests;
-            context.Response.ContentType = "text/plain";   
-
-            await context.Response.WriteAsync(JsonSerializer.Serialize(new ExceptionResponse { Message = "Daily request limit hit" }));
-            return;
+            throw new FriendlyException("Too Many Requests", 429, "Daily request limit hit");
         }
-        else 
+        else
         {
             await _next(context);
         }        

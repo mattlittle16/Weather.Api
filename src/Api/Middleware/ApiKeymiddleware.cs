@@ -12,6 +12,13 @@ public class ApiKeyMiddleware(RequestDelegate next, IOptions<EnvironmentSettings
 
     public async Task Invoke(HttpContext context)
     {
+        if (context.Request.Path.StartsWithSegments("/swagger")
+        || context.Request.Path.StartsWithSegments("/healthcheck"))
+        {
+            await next(context);
+            return;
+        }
+
         var apiKey = configuration.Value.XApiKey;
 
         if (!context.Request.Headers.TryGetValue(APIKEYNAME, out var extractedApiKey))

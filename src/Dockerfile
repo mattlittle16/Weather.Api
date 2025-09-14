@@ -24,15 +24,14 @@ COPY --from=build --chown=appuser:appuser /app/out ./
 RUN apt-get update && apt-get install -y --no-install-recommends curl && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Use non-root user
-USER appuser
+# Temporarily run as root to bind to port 80
+# USER appuser
 
 EXPOSE 80
 ENV ASPNETCORE_URLS="http://*:80"
-ENV ASPNETCORE_ENVIRONMENT="Production"
 
-# Health check for ECS
+# Health check for Lightsail
 HEALTHCHECK --interval=30s --timeout=3s --start-period=30s --retries=3 \
-  CMD curl -f http://localhost:8080/healthcheck || exit 1
+  CMD curl -f http://localhost/healthcheck || exit 1
 
 ENTRYPOINT ["dotnet", "Api.dll"]
