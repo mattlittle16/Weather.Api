@@ -57,15 +57,21 @@ appSettings.Bind(envSettings);
 builder.Services.AddSingleton(envSettings);
 
 builder.Services.AddCustomServices(envSettings);
-builder.Services.AddCustomLogging();
+
 
 
 var app = builder.Build();
-
-// Add Serilog request logging
 app.UseSerilogRequestLogging(options =>
 {
-    options.MessageTemplate = "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000} ms";
+    options.MessageTemplate = "HTTP {RequestMethod} {RequestPath}{QueryString} responded {StatusCode} in {Elapsed:0.0000} ms";
+    options.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
+    {
+        diagnosticContext.Set("QueryString", httpContext.Request.QueryString.Value);
+        if (httpContext.Request.Query.Count > 0)
+        {
+            diagnosticContext.Set("QueryParameters", httpContext.Request.Query.ToDictionary(x => x.Key, x => x.Value.ToString()));
+        }
+    };
 });
 
 app.UseMiddleware<ExceptionMiddleware>();

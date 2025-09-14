@@ -21,8 +21,7 @@ public class GeocodeController(ILogger<GeocodeController> logger, IWeatherServic
     {
         using var scope = logger.BeginScope("GeocodeController.Get - {0}", Guid.NewGuid());
         var validatorResult = await validator.ValidateAsync(requestModel);
-        logger.LogInformation($"Geocode request {requestModel.City} {requestModel.State} {requestModel.PostalCode}");
-
+        
         if (validatorResult.IsValid)
         {
             return Ok(new GeocodeResponse(await weatherService.GetGeocodeAsync(requestModel.City!, requestModel.State!, requestModel.PostalCode!)));

@@ -21,8 +21,6 @@ public class WeatherController(ILogger<WeatherController> logger, IWeatherServic
     {
         using var scope = logger.BeginScope("WeatherController.Get - {0}", Guid.NewGuid());
         var validatorResult = await validator.ValidateAsync(requestModel);
-        
-        logger.LogInformation($"Weather request {requestModel.Lat} - {requestModel.Lon}");
 
         if (validatorResult.IsValid)
         {
