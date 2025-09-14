@@ -7,23 +7,33 @@ using Core.Entities;
 using Core.Interfaces;
 using Infrastructure.ExternalServices;
 using Infrastructure.Interfaces;
-using Infrastructure.MySql;
-using Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
-using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
-using Infrastructure.Logger;
-using Api.Startup;
 using Refit;
 using FluentValidation;
 using Api.Validators;
 using Core.RequestModels;
+using Api.Startup;
+using Serilog;
+using Serilog.Events;
+using Serilog.Formatting.Compact;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Configure Serilog with code-based configuration
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
+    .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning)
+    .ReadFrom.Configuration(builder.Configuration) // Read log levels from appsettings
+    .WriteTo.Console(new CompactJsonFormatter())
+    .Enrich.FromLogContext()
+    .Enrich.WithThreadId()
+    .Enrich.WithProperty("ApplicationName", "Weather.Api")
+    .CreateLogger();
+
+builder.Host.UseSerilog();
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -41,38 +51,28 @@ builder.Services.AddCors(options =>
         });
 });
 
-
 var appSettings = builder.Configuration.GetSection("AppSettings");
 var envSettings = new EnvironmentSettings();
 appSettings.Bind(envSettings);
-builder.Services.AddRefitClient<IOpenWeatherApiRefit>().ConfigureHttpClient(options => options.BaseAddress = new Uri(envSettings.OpenWeatherApiBaseUrl));
+builder.Services.AddSingleton(envSettings);
 
+builder.Services.AddCustomServices(envSettings);
+builder.Services.AddCustomLogging();
 
-//caching and rate limiting
-builder.Services.AddMemoryCache();
-builder.Services.AddRateLimit();
-
-var conString = builder.Configuration.GetConnectionString("WeatherDb");
-builder.Services.AddDbContextPool<WeatherDbContext>(
-      options => options.UseMySql(conString, ServerVersion.Create(Version.Parse("8.3.0"), ServerType.MySql), b => b.MigrationsAssembly("Infrastructure"))
-);
-
-//add services
-builder.Services.AddScoped<IOpenWeatherApi, OpenWeatherApi>();
-builder.Services.AddScoped<IWeatherService, WeatherService>();
-builder.Services.AddScoped<IGenericRepository<Base>, GenericRepository<Base>>();
-builder.Services.AddScoped<IValidator<WeatherRequestModel>, WeatherRequestValidator>();
-builder.Services.AddScoped<IValidator<GeocodeRequestModel>, GeocodeRequestValidator>();
-
-//Logging
-builder.Services.AddSingleton<ILoggerProvider, DbLoggerProvider>();
 
 var app = builder.Build();
+
+// Add Serilog request logging
+app.UseSerilogRequestLogging(options =>
+{
+    options.MessageTemplate = "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000} ms";
+});
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 // dev stuff
 if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName.ToLower() == "docker")
 {
-    app.UseItToSeedSqlServer(); 
     app.UseSwagger();
     app.UseSwaggerUI();
 }
