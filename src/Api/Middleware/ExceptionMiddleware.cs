@@ -35,6 +35,7 @@ public class ExceptionMiddleware(RequestDelegate next)
         {
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
             context.Response.ContentType = "text/json";
+            context.Response.Headers.Append("Access-Control-Allow-Origin", "*");
 
             await context.Response.WriteAsync(
                 JsonSerializer.Serialize(new

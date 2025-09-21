@@ -75,6 +75,7 @@ app.UseSerilogRequestLogging(options =>
 });
 
 //middleware
+app.UseCors(Constants.CORSPolicy);
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseMiddleware<ApiKeyMiddleware>();
 app.UseMiddleware<DailyRequestLimitMiddleware>();
@@ -86,11 +87,8 @@ if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName.ToLower()
     app.UseSwaggerUI();
 }
 
-//cors
-app.UseCors(Constants.CORSPolicy);
-
 app.UseAuthorization();
-app.MapControllers();
 app.UseRateLimiter();
+app.MapControllers();
 
 app.Run();
