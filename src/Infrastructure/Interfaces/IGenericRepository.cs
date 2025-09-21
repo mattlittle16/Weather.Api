@@ -5,7 +5,7 @@ namespace Infrastructure.Interfaces;
 
 public interface IGenericRepository <T> where T : Base
 {
-    IQueryable<T> GetAll(Expression<Func<T, bool>> predicate = null);
+    IQueryable<T> GetAll(Expression<Func<T, bool>>? predicate = null);
 
     Task<T> GetById(Guid id);
 

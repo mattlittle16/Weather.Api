@@ -1,11 +1,3 @@
-namespace Core.RequestModels
-{
-    public record GeocodeRequestModel
-    {
-        public string? City { get; init; }
+namespace Core.RequestModels;
 
-        public string? State { get; init; }
-
-        public string? PostalCode { get; init; }
-    }
-}
+public record GeocodeRequestModel(string? City, string? State, string? PostalCode, string? CountryCode);

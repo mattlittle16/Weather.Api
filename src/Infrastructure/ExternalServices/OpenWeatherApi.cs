@@ -21,29 +21,14 @@ public class OpenWeatherApi : IOpenWeatherApi
         _logger = logger;
     }
 
-    public async Task<Geocode> GetGeocodeAsync(string city, string state, string postalCode)
+    public async Task<Geocode> GetGeocodeAsync(string city, string state, string countryCode)
     {
-        var response = await _client.GetGeocodeAsync(city, state, postalCode, _environmentSettings.OpenWeatherApiKey);
-        
+        var response = await _client.GetGeocodeAsync(city, state, countryCode, _environmentSettings.OpenWeatherApiKey!);
+
         if (response.IsSuccessStatusCode)
         {
             var content = await response.Content.ReadAsStringAsync();
-            if (content is null || string.IsNullOrWhiteSpace(content)) 
-            {
-                var message = $"get geocode call failed with empty content {response}";
-                throw new Exception(message);
-            }
-
-            var geocodeList = JsonSerializer.Deserialize<List<Geocode>>(content);
-            if (geocodeList is not null && geocodeList.Count > 0) 
-            {
-                return geocodeList[0];
-            }
-            else
-            {
-                var message = $"get geocode call failed {response}";
-                throw new Exception(message);
-            }
+            return JsonSerializer.Deserialize<List<Geocode>>(content)![0];   
         }
         else
         {
@@ -52,14 +37,48 @@ public class OpenWeatherApi : IOpenWeatherApi
             throw new Exception(message);
         }
     }
+    
+    public async Task<Geocode> GetGeocodeZipAsync(string postalCode, string countryCode)
+    {
+        var response = await _client.GetGeocodeByZipAsync(postalCode, countryCode, _environmentSettings.OpenWeatherApiKey!);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<Geocode>(content);
+        }
+        else
+        {
+            _logger.LogError("geocoding by zip call failed {response}", response.StatusCode);
+            var message = $"get geocode by zip call failed {response}";
+            throw new Exception(message);
+        }
+    }
+
+    public async Task<ReverseGeocode> ReverseGeocodeAsync(string latitude, string longitude)
+    {
+        var response = await _client.ReverseGeocodeAsync(latitude, longitude, _environmentSettings.OpenWeatherApiKey!);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<List<ReverseGeocode>>(content)![0];
+        }
+        else
+        {
+            _logger.LogError("geocoding by zip call failed {response}", response.StatusCode);
+            var message = $"get geocode by zip call failed {response}";
+            throw new Exception(message);
+        }
+    }
 
     public async Task<WeatherRoot> GetWeatherInfoAsync(string latitude, string longitude)
-    {        
+    {
         var response = await _client.GetWeatherAsync(latitude, longitude, _environmentSettings.OpenWeatherApiKey);
         if (response.IsSuccessStatusCode)
         {
             var content = await response.Content.ReadAsStringAsync();
-            if (content is null || string.IsNullOrWhiteSpace(content)) 
+            if (content is null || string.IsNullOrWhiteSpace(content))
             {
                 var message = $"get weather call failed with empty content {response}";
                 throw new Exception(message);
@@ -72,6 +91,6 @@ public class OpenWeatherApi : IOpenWeatherApi
             _logger.LogError("geocoding call failed {response}", response.StatusCode);
             var message = $"get weather call failed {response}";
             throw new Exception(message);
-        }        
+        }
     }
 }

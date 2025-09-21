@@ -27,6 +27,7 @@ public static class Services
         services.AddScoped<IWeatherService, WeatherService>();
         services.AddScoped<IValidator<WeatherRequestModel>, WeatherRequestValidator>();
         services.AddScoped<IValidator<GeocodeRequestModel>, GeocodeRequestValidator>();
+        services.AddScoped<IValidator<ReverseGeocodeRequestModel>, ReverseGeocodeRequestValidator>();
 
         
         return services;

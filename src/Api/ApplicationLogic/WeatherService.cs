@@ -10,27 +10,63 @@ public class WeatherService(IOpenWeatherApi openWeatherApi, IMemoryCache cache, 
     private readonly IOpenWeatherApi _openWeatherApi = openWeatherApi;
     private readonly IMemoryCache _cache = cache;
 
-    public async Task<Geocode> GetGeocodeAsync(string city, string state, string postalCode)
+    public async Task<Geocode> GetGeocodeAsync(string city, string state, string countryCode)
     {
-        var key = (city+state+postalCode).GetHashString();
+        var key = (city+state+countryCode).GetHashString();
 
         if (_cache.TryGetValue(key, out Geocode? cachedGeocode) && cachedGeocode is not null)
         {
             logger.LogInformation("Fetching geocode from cache");
-            return cachedGeocode;
+            return (Geocode)cachedGeocode;
         }
 
         logger.LogInformation("Fetching geocode from OpenWeather API");
-        var geocode = await _openWeatherApi.GetGeocodeAsync(city, state, postalCode);
+        var geocode = await _openWeatherApi.GetGeocodeAsync(city, state, countryCode);
 
-        _cache.Set((city+state+postalCode).GetHashString(), geocode, TimeSpan.FromHours(24));
+        _cache.Set(key, geocode, TimeSpan.FromHours(24));
+
+        return geocode;
+    }
+    
+    public async Task<Geocode> GetGeocodeAsync(string postalCode, string countryCode)
+    {
+        var key = (postalCode+countryCode).GetHashString();
+
+        if (_cache.TryGetValue(key, out Geocode? cachedGeocode) && cachedGeocode is not null)
+        {
+            logger.LogInformation("Fetching geocode from cache");
+            return (Geocode)cachedGeocode;
+        }
+
+        logger.LogInformation("Fetching geocode from OpenWeather API");
+        var geocode = await _openWeatherApi.GetGeocodeZipAsync(postalCode, countryCode);
+
+        _cache.Set(key, geocode, TimeSpan.FromHours(24));
+
+        return geocode;
+    }
+
+    public async Task<ReverseGeocode> ReverseGeocodeAsync(string latitude, string longitude)
+    {
+        var key = (latitude+longitude).GetHashString();
+
+        if (_cache.TryGetValue(key, out ReverseGeocode? cachedReverseGeocode) && cachedReverseGeocode is not null)
+        {
+            logger.LogInformation("Fetching geocode from cache");
+            return (ReverseGeocode)cachedReverseGeocode;
+        }
+
+        logger.LogInformation("Fetching geocode from OpenWeather API");
+        var geocode = await _openWeatherApi.ReverseGeocodeAsync(latitude, longitude);
+
+        _cache.Set(key, geocode, TimeSpan.FromHours(24));
 
         return geocode;
     }
 
     public async Task<WeatherRoot> GetWeatherAsync(string latitude, string longitude)
     {
-        var key = (latitude+longitude).GetHashString();
+        var key = (latitude + longitude).GetHashString();
 
         if (_cache.TryGetValue(key, out WeatherRoot? cachedWeather) && cachedWeather is not null)
         {

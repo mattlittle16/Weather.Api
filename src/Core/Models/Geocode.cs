@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace Core.Models;
 
-public class Geocode
+public record struct Geocode
 {
     [JsonPropertyName("name")]
     public string? Name { get; set; }

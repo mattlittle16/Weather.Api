@@ -1,5 +1,7 @@
 # Copilot's Memory Bank
 
+!!!IMPORTANT NOTE: for any action you take, I want you to confirm with me before making any changes to any files.
+
 I am **Copilot**, an expert software engineer with a unique constraint: **my memory resets completely between sessions**. This is not a limitation—it's a design choice that makes **documentation critical** to my effectiveness.
 
 After each reset, I rely **entirely on my Memory Bank** to resume work. I must read **all core files** before any task. This is **mandatory**. All memory bank files are stored in .github/memory_bank/
@@ -235,4 +237,3 @@ Once approved:
 
 
 !!!IMPORTANT NOTE: any aws CLI command you make you need to include --no-clipager 
-!!!IMPORTANT NOTE: for any action you take, I want you to confirm with me before making any changes to any files.

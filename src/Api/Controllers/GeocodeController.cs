@@ -1,6 +1,8 @@
+using System.Text.Json;
 using Core.Constants;
 using Core.Extensions;
 using Core.Interfaces;
+using Core.Models;
 using Core.RequestModels;
 using Core.ResponseModels;
 using FluentValidation;
@@ -15,20 +17,25 @@ namespace Api.Controllers;
 public class GeocodeController(ILogger<GeocodeController> logger, IWeatherService weatherService, IValidator<GeocodeRequestModel> validator) : ControllerBase
 {
     [HttpGet]
-    [ProducesResponseType(typeof(GeocodeResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Geocode), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionResponse), StatusCodes.Status429TooManyRequests)]
     public async Task<IActionResult> Get([FromQuery] GeocodeRequestModel requestModel)
     {
         using var scope = logger.BeginScope("GeocodeController.Get - {0}", Guid.NewGuid());
         var validatorResult = await validator.ValidateAsync(requestModel);
-        
+
         if (validatorResult.IsValid)
         {
-            return Ok(new GeocodeResponse(await weatherService.GetGeocodeAsync(requestModel.City!, requestModel.State!, requestModel.PostalCode!)));
+            return requestModel switch
+            {
+                { PostalCode: not null and not "" } => Ok(await weatherService.GetGeocodeAsync(requestModel.PostalCode!, requestModel.CountryCode!)),
+                { City: not null and not "" } => Ok(await weatherService.GetGeocodeAsync(requestModel.City!, requestModel.State!, requestModel.CountryCode!)),
+                _ => throw new NotImplementedException()
+            };
         }
-        else 
+        else
         {
-            return BadRequest(validatorResult.PrintErrors());
+            throw new FriendlyException("Validation Error", 400, JsonSerializer.Serialize(validatorResult.PrintErrors()));
         }
     }
 }
