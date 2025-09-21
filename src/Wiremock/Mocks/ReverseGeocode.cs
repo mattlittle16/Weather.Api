@@ -9,13 +9,13 @@ using WireMock.Util;
 
 namespace Wiremock.Mocks
 {
-    public class Geocode : IMock
+    public class ReverseGeocode : IMock
     {
         public void RegisterMocks(WireMockServer server)
         {
             server.Given(Request
                 .Create()
-                .WithPath(new RegexMatcher("/geo/1.0/direct"))
+                .WithPath(new RegexMatcher("/geo/1.0/reverse"))
                 .UsingGet())
                 
                 .RespondWith(
@@ -35,11 +35,14 @@ namespace Wiremock.Mocks
                 {
                     BodyAsJson = new List<object> { 
                         new {
-                           name = "Cumming",
-                           lat = -84.1402M, 
-                           lon = 34.2073M, 
+                           name = "Forsyth County",
+                           lat = -84.1402M,
+                           lon = 34.2073M,
                            country = "us",
-                           state = "Georgia"
+                           state = "Georgia",
+                           local_names = new {
+                               en = "Forsyth County",
+                           }
                         }
                     },
                     DetectedBodyType = BodyType.Json

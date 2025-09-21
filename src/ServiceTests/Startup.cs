@@ -25,13 +25,16 @@ namespace ServiceTests
             var envSettings = new EnvironmentSettings();
             _configuration.GetSection("AppSettings").Bind(envSettings);
 
+        
             services.AddHttpClient(Constants.TestClient, options =>
             {
                 options.BaseAddress = new Uri(envSettings.Url!);
+                options.DefaultRequestHeaders.Add("x-api-key", envSettings.ApiKey!);
             })
             .ConfigurePrimaryHttpMessageHandler(x => new HttpClientHandler
             {
                 AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate | DecompressionMethods.Brotli
+
             });        
         }
     }    
