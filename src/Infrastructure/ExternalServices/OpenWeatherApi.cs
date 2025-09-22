@@ -1,5 +1,6 @@
 using System.Text.Json;
 using Core.Configuration;
+using Core.DTOs;
 using Core.Interfaces;
 using Core.Models;
 using Infrastructure.Interfaces;
@@ -72,7 +73,7 @@ public class OpenWeatherApi : IOpenWeatherApi
         }
     }
 
-    public async Task<WeatherRoot> GetWeatherInfoAsync(string latitude, string longitude)
+    public async Task<OpenWeatherResponse> GetWeatherInfoAsync(string latitude, string longitude)
     {
         var response = await _client.GetWeatherAsync(latitude, longitude, _environmentSettings.OpenWeatherApiKey);
         if (response.IsSuccessStatusCode)
@@ -84,7 +85,7 @@ public class OpenWeatherApi : IOpenWeatherApi
                 throw new Exception(message);
             }
 
-            return JsonSerializer.Deserialize<WeatherRoot>(content)!;
+            return JsonSerializer.Deserialize<OpenWeatherResponse>(content)!;
         }
         else
         {

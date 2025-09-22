@@ -1,6 +1,7 @@
 using System.Net;
 using System.Text.Json;
 using AutoFixture;
+using Core.DTOs;
 using Core.Models;
 using WireMock;
 using WireMock.Matchers;
@@ -34,7 +35,7 @@ namespace Wiremock.Mocks
         public ResponseMessage GetResponse() 
         {
             var fixture = new Fixture();
-            var weather = fixture.Create<WeatherRoot>();
+            var weather = fixture.Create<OpenWeatherResponse>();
 
             var response = new ResponseMessage
             {

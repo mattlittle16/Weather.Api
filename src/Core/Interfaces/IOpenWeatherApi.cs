@@ -1,3 +1,4 @@
+using Core.DTOs;
 using Core.Models;
 
 namespace Core.Interfaces;
@@ -10,5 +11,5 @@ public interface IOpenWeatherApi
 
     Task<ReverseGeocode> ReverseGeocodeAsync(string latitude, string longitude);
 
-    Task<WeatherRoot> GetWeatherInfoAsync(string Latitude, string Longitude);
+    Task<OpenWeatherResponse> GetWeatherInfoAsync(string Latitude, string Longitude);
 }

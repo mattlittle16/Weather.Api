@@ -1,3 +1,4 @@
+using Core.DTOs;
 using Core.Extensions;
 using Core.Interfaces;
 using Core.Models;
@@ -64,14 +65,14 @@ public class WeatherService(IOpenWeatherApi openWeatherApi, IMemoryCache cache, 
         return geocode;
     }
 
-    public async Task<WeatherRoot> GetWeatherAsync(string latitude, string longitude)
+    public async Task<OpenWeatherResponse> GetWeatherAsync(string latitude, string longitude)
     {
         var key = (latitude + longitude).GetHashString();
 
-        if (_cache.TryGetValue(key, out WeatherRoot? cachedWeather) && cachedWeather is not null)
+        if (_cache.TryGetValue(key, out OpenWeatherResponse? cachedWeather) && cachedWeather is not null)
         {
             logger.LogInformation("Fetching weather from cache");
-            return cachedWeather;
+            return (OpenWeatherResponse)cachedWeather;
         }
 
         logger.LogInformation("Fetching weather from OpenWeather API");

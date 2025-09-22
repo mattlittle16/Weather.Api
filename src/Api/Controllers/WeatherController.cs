@@ -6,6 +6,7 @@ using Core.Extensions;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
+using Core.Models;
 
 namespace Api.Controllers;
 
