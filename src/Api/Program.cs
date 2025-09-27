@@ -104,12 +104,10 @@ app.UseMiddleware<ExceptionMiddleware>();
 app.UseMiddleware<ApiKeyMiddleware>();
 app.UseMiddleware<DailyRequestLimitMiddleware>();
 
-// dev stuff
-if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName.ToLower() == "docker")
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
 
 app.UseAuthorization();
 app.UseRateLimiter();
