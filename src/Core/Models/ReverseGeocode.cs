@@ -2,10 +2,10 @@ using System.Text.Json.Serialization;
 
 namespace Core.Models;
 
-public record struct ReverseGeocode
+public record ReverseGeocode
 {
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public string? Name { get; init; }
 
     [JsonPropertyName("lat")]
     public decimal Lat { get; init; }
@@ -14,13 +14,13 @@ public record struct ReverseGeocode
     public decimal Lon { get; init; }
 
     [JsonPropertyName("country")]
-    public string Country { get; init; }
+    public string? Country { get; init; }
 
     [JsonPropertyName("state")]
-    public string State { get; init; }
+    public string? State { get; init; }
 
     [JsonPropertyName("local_names")]
-    public LocalName LocalNames { get; init; }
+    public LocalName? LocalNames { get; init; }
     
     public record LocalName
     {

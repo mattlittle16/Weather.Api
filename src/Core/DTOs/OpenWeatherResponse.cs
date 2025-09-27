@@ -3,256 +3,256 @@ using System.Text.Json.Serialization;
 
 namespace Core.DTOs;
 
-public record struct OpenWeatherResponse
+public record OpenWeatherResponse
 {
     [JsonPropertyName("lat")]
-    public decimal? Lat { get; set; }
+    public decimal? Lat { get; init; }
 
     [JsonPropertyName("lon")]
-    public decimal? Lon { get; set; }
+    public decimal? Lon { get; init; }
 
     [JsonPropertyName("timezone")]
-    public string? Timezone { get; set; }
+    public string? Timezone { get; init; }
 
     [JsonPropertyName("timezone_offset")]
-    public int? TimezoneOffset { get; set; }
+    public int? TimezoneOffset { get; init; }
 
     [JsonPropertyName("current")]
-    public CurrentChild? Current { get; set; }
+    public CurrentChild? Current { get; init; }
 
     [JsonPropertyName("minutely")]
-    public List<MinutelyChild>? Minutely { get; set; }
+    public List<MinutelyChild>? Minutely { get; init; }
 
     [JsonPropertyName("hourly")]
-    public List<HourlyChild>? Hourly { get; set; }
+    public List<HourlyChild>? Hourly { get; init; }
 
     [JsonPropertyName("daily")]
-    public List<DailyChild>? Daily { get; set; }
+    public List<DailyChild>? Daily { get; init; }
 
 
-    public record struct CurrentChild
+    public record CurrentChild
     {
         [JsonPropertyName("dt")]
-        public int? Dt { get; set; }
+        public int? Dt { get; init; }
 
         [JsonPropertyName("sunrise")]
-        public int? Sunrise { get; set; }
+        public int? Sunrise { get; init; }
 
         [JsonPropertyName("sunset")]
-        public int? Sunset { get; set; }
+        public int? Sunset { get; init; }
 
         [JsonPropertyName("temp")]
-        public decimal? Temp { get; set; }
+        public decimal? Temp { get; init; }
 
         [JsonPropertyName("feels_like")]
-        public decimal? FeelsLike { get; set; }
+        public decimal? FeelsLike { get; init; }
 
         [JsonPropertyName("pressure")]
-        public int? Pressure { get; set; }
+        public int? Pressure { get; init; }
 
         [JsonPropertyName("humidity")]
-        public int? Humidity { get; set; }
+        public int? Humidity { get; init; }
 
         [JsonPropertyName("dew_point")]
-        public decimal? DewPoint { get; set; }
+        public decimal? DewPoint { get; init; }
 
         [JsonPropertyName("uvi")]
-        public decimal? Uvi { get; set; }
+        public decimal? Uvi { get; init; }
 
         [JsonPropertyName("clouds")]
-        public int? Clouds { get; set; }
+        public int? Clouds { get; init; }
 
         [JsonPropertyName("visibility")]
-        public int? Visibility { get; set; }
+        public int? Visibility { get; init; }
 
         [JsonPropertyName("wind_speed")]
-        public decimal? WindSpeed { get; set; }
+        public decimal? WindSpeed { get; init; }
 
         [JsonPropertyName("wind_deg")]
-        public int? WindDeg { get; set; }
+        public int? WindDeg { get; init; }
 
         [JsonPropertyName("wind_gust")]
-        public decimal? WindGust { get; set; }
+        public decimal? WindGust { get; init; }
 
         [JsonPropertyName("weather")]
-        public List<WeatherDescriptionChild>? Weather { get; set; }
+        public List<WeatherDescriptionChild>? Weather { get; init; }
     }
 
-    public record struct DailyChild
+    public record DailyChild
     {
         [JsonPropertyName("dt")]
-        public long? Dt { get; set; }
+        public long? Dt { get; init; }
 
         [JsonPropertyName("sunrise")]
-        public long? Sunrise { get; set; }
+        public long? Sunrise { get; init; }
 
         [JsonPropertyName("sunset")]
-        public long? Sunset { get; set; }
+        public long? Sunset { get; init; }
 
         [JsonPropertyName("moonrise")]
-        public long? Moonrise { get; set; }
+        public long? Moonrise { get; init; }
 
         [JsonPropertyName("moonset")]
-        public long? Moonset { get; set; }
+        public long? Moonset { get; init; }
 
         [JsonPropertyName("moon_phase")]
-        public decimal? MoonPhase { get; set; }
+        public decimal? MoonPhase { get; init; }
 
         [JsonPropertyName("summary")]
-        public string? Summary { get; set; }
+        public string? Summary { get; init; }
 
         [JsonPropertyName("temp")]
-        public TempChild? Temp { get; set; }
+        public TempChild? Temp { get; init; }
 
         [JsonPropertyName("feels_like")]
-        public FeelsLikeChild? FeelsLike { get; set; }
+        public FeelsLikeChild? FeelsLike { get; init; }
 
         [JsonPropertyName("pressure")]
-        public int? Pressure { get; set; }
+        public int? Pressure { get; init; }
 
         [JsonPropertyName("humidity")]
-        public int? Humidity { get; set; }
+        public int? Humidity { get; init; }
 
         [JsonPropertyName("dew_point")]
-        public decimal? DewPoint { get; set; }
+        public decimal? DewPoint { get; init; }
 
         [JsonPropertyName("wind_speed")]
-        public decimal? WindSpeed { get; set; }
+        public decimal? WindSpeed { get; init; }
 
         [JsonPropertyName("wind_deg")]
-        public int? WindDeg { get; set; }
+        public int? WindDeg { get; init; }
 
         [JsonPropertyName("wind_gust")]
-        public decimal? WindGust { get; set; }
+        public decimal? WindGust { get; init; }
 
         [JsonPropertyName("weather")]
-        public List<WeatherDescriptionChild>? Weather { get; set; }
+        public List<WeatherDescriptionChild>? Weather { get; init; }
 
         [JsonPropertyName("clouds")]
-        public int? Clouds { get; set; }
+        public int? Clouds { get; init; }
 
         [JsonPropertyName("pop")]
-        public decimal? Pop { get; set; }
+        public decimal? Pop { get; init; }
 
         [JsonPropertyName("uvi")]
-        public decimal? Uvi { get; set; }
+        public decimal? Uvi { get; init; }
 
         [JsonPropertyName("rain")]
-        public decimal? Rain { get; set; }
+        public decimal? Rain { get; init; }
     }
 
-    public record struct HourlyChild
+    public record HourlyChild
     {
         [JsonPropertyName("dt")]
-        public long? Dt { get; set; }
+        public long? Dt { get; init; }
 
         [JsonPropertyName("temp")]
-        public decimal? Temp { get; set; }
+        public decimal? Temp { get; init; }
 
         [JsonPropertyName("feels_like")]
-        public decimal? FeelsLike { get; set; }
+        public decimal? FeelsLike { get; init; }
 
         [JsonPropertyName("pressure")]
-        public int? Pressure { get; set; }
+        public int? Pressure { get; init; }
 
         [JsonPropertyName("humidity")]
-        public int? Humidity { get; set; }
+        public int? Humidity { get; init; }
 
         [JsonPropertyName("dew_point")]
-        public decimal? DewPoint { get; set; }
+        public decimal? DewPoint { get; init; }
 
         [JsonPropertyName("uvi")]
-        public decimal? Uvi { get; set; }
+        public decimal? Uvi { get; init; }
 
         [JsonPropertyName("clouds")]
-        public int? Clouds { get; set; }
+        public int? Clouds { get; init; }
 
         [JsonPropertyName("visibility")]
-        public int? Visibility { get; set; }
+        public int? Visibility { get; init; }
 
         [JsonPropertyName("wind_speed")]
-        public decimal? WindSpeed { get; set; }
+        public decimal? WindSpeed { get; init; }
 
         [JsonPropertyName("wind_deg")]
-        public int? WindDeg { get; set; }
+        public int? WindDeg { get; init; }
 
         [JsonPropertyName("wind_gust")]
-        public decimal? WindGust { get; set; }
+        public decimal? WindGust { get; init; }
 
         [JsonPropertyName("weather")]
-        public List<WeatherDescriptionChild>? Weather { get; set; }
+        public List<WeatherDescriptionChild>? Weather { get; init; }
 
         [JsonPropertyName("pop")]
-        public decimal? Pop { get; set; }
+        public decimal? Pop { get; init; }
 
         [JsonPropertyName("rain")]
-        public RainChild? Rain { get; set; }
+        public RainChild? Rain { get; init; }
     }
 
-    public record struct MinutelyChild
+    public record MinutelyChild
     {
         [JsonPropertyName("dt")]
-        public long? Dt { get; set; }
+        public long? Dt { get; init; }
 
         [JsonPropertyName("precipitation")]
-        public int? Precipitation { get; set; }
+        public int? Precipitation { get; init; }
     }
 
-    public record struct WeatherDescriptionChild
+    public record WeatherDescriptionChild
     {
         [JsonPropertyName("id")]
-        public int? Id { get; set; }
+        public int? Id { get; init; }
 
         [JsonPropertyName("main")]
-        public string? Main { get; set; }
+        public string? Main { get; init; }
 
         [JsonPropertyName("description")]
-        public string? Description { get; set; }
+        public string? Description { get; init; }
 
         [JsonPropertyName("icon")]
-        public string? Icon { get; set; }
+        public string? Icon { get; init; }
     }
 
-    public record struct RainChild
+    public record RainChild
     {
         [JsonPropertyName("1h")]
-        public decimal? _1h { get; set; }
+        public decimal? _1h { get; init; }
     }
 
-    public record struct TempChild
+    public record TempChild
     {
         [JsonPropertyName("day")]
-        public decimal? Day { get; set; }
+        public decimal? Day { get; init; }
 
         [JsonPropertyName("min")]
-        public decimal? Min { get; set; }
+        public decimal? Min { get; init; }
 
         [JsonPropertyName("max")]
-        public decimal? Max { get; set; }
+        public decimal? Max { get; init; }
 
         [JsonPropertyName("night")]
-        public decimal? Night { get; set; }
+        public decimal? Night { get; init; }
 
         [JsonPropertyName("eve")]
-        public decimal? Eve { get; set; }
+        public decimal? Eve { get; init; }
 
         [JsonPropertyName("morn")]
-        public decimal? Morn { get; set; }
+        public decimal? Morn { get; init; }
     }
 
-    public record struct FeelsLikeChild
+    public record FeelsLikeChild
     {
         [JsonPropertyName("day")]
-        public decimal? Day { get; set; }
+        public decimal? Day { get; init; }
 
         [JsonPropertyName("night")]
-        public decimal? Night { get; set; }
+        public decimal? Night { get; init; }
 
         [JsonPropertyName("eve")]
-        public decimal? Eve { get; set; }
+        public decimal? Eve { get; init; }
 
         [JsonPropertyName("morn")]
-        public decimal? Morn { get; set; }
+        public decimal? Morn { get; init; }
     }
 
 };

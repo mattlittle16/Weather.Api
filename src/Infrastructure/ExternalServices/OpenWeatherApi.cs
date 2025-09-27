@@ -46,7 +46,7 @@ public class OpenWeatherApi : IOpenWeatherApi
         if (response.IsSuccessStatusCode)
         {
             var content = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<Geocode>(content);
+            return JsonSerializer.Deserialize<Geocode>(content)!;
         }
         else
         {

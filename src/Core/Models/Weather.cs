@@ -2,7 +2,7 @@ using Core.DTOs;
 
 namespace Core.Models;
 
-public record struct WeatherResponse
+public record WeatherResponse
 {
     public WeatherResponse()
     {
@@ -71,23 +71,23 @@ public record struct WeatherResponse
                 Sunrise = x.Sunrise is not null ? DateTimeOffset.FromUnixTimeSeconds(x.Sunrise.Value) : default,
                 Sunset = x.Sunset is not null ? DateTimeOffset.FromUnixTimeSeconds(x.Sunset.Value) : default,
                 Summary = x.Summary,
-                Temp = x.Temp.HasValue ? new TemperatureResponse
+                Temp = x.Temp != null ? new TemperatureResponse
                 {
-                    Day = x.Temp.Value.Day ?? default,
-                    Min = x.Temp.Value.Min,
-                    Max = x.Temp.Value.Max,
-                    Night = x.Temp.Value.Night,
-                    Eve = x.Temp.Value.Eve ?? default,
-                    Morn = x.Temp.Value.Morn ?? default
+                    Day = x.Temp.Day ?? default,
+                    Min = x.Temp.Min,
+                    Max = x.Temp.Max,
+                    Night = x.Temp.Night,
+                    Eve = x.Temp.Eve ?? default,
+                    Morn = x.Temp.Morn ?? default
                 } : null,
-                FeelsLike = x.FeelsLike.HasValue ? new TemperatureResponse
+                FeelsLike = x.FeelsLike != null ? new TemperatureResponse
                 {
-                    Day = x.FeelsLike.Value.Day ?? default,
-                    Night = x.FeelsLike.Value.Night,
+                    Day = x.FeelsLike.Day ?? default,
+                    Night = x.FeelsLike.Night,
                     Max = null,
                     Min = null,
-                    Eve = x.FeelsLike.Value.Eve ?? default,
-                    Morn = x.FeelsLike.Value.Morn ?? default
+                    Eve = x.FeelsLike.Eve ?? default,
+                    Morn = x.FeelsLike.Morn ?? default
                 } : null,
                 Pressure = x.Pressure ?? default,
                 Humidity = x.Humidity ?? default,
@@ -102,7 +102,7 @@ public record struct WeatherResponse
     }
 
 
-    public record struct CurrentConditionResponse
+    public record CurrentConditionResponse
     {
         public decimal Temperature { get; set; }
 
@@ -125,7 +125,7 @@ public record struct WeatherResponse
         public decimal UVIndex { get; set; }
     }
 
-    public record struct DailyConditionResponse
+    public record DailyConditionResponse
     {
         public DateTimeOffset Time { get; set; }
         public DateTimeOffset Sunrise { get; set; }
@@ -154,7 +154,7 @@ public record struct WeatherResponse
 
     }
 
-    public record struct HourlyConditionResponse
+    public record HourlyConditionResponse
     {
         public DateTimeOffset Time { get; set; }
         public decimal Temperature { get; set; }
@@ -169,7 +169,7 @@ public record struct WeatherResponse
         public int DescriptionId { get; set; }
     }
 
-    public record struct TemperatureResponse
+    public record TemperatureResponse
     {
         public decimal Day { get; set; }
         public decimal? Min { get; set; }
