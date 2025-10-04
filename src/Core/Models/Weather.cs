@@ -57,7 +57,8 @@ public record WeatherResponse
                 Description = weatherDesc?.Description,
                 DescriptionId = weatherDesc?.Id ?? 0,
                 WindGusts = x.WindGust ?? default,
-                WindSpeed = x.WindSpeed ?? default
+                WindSpeed = x.WindSpeed ?? default,
+                RainChance = x.Pop ?? default
             };
         }).ToList() ?? new List<HourlyConditionResponse>();
 
@@ -96,7 +97,8 @@ public record WeatherResponse
                 Description = weatherDesc?.Description,
                 DescriptionId = weatherDesc?.Id ?? 0,
                 CloudPercentage = x.Clouds ?? default,
-                UVIndex = x.Uvi ?? default
+                UVIndex = x.Uvi ?? default,
+                RainChance = x.Pop ?? default
             };
         }).ToList() ?? new List<DailyConditionResponse>();
     }
@@ -151,6 +153,7 @@ public record WeatherResponse
         public int CloudPercentage { get; set; }
 
         public decimal UVIndex { get; set; }
+        public decimal RainChance { get; set; }
 
     }
 
@@ -167,6 +170,7 @@ public record WeatherResponse
         public decimal WindGusts { get; set; }
         public string? Description { get; set; }
         public int DescriptionId { get; set; }
+        public decimal RainChance { get; set; }
     }
 
     public record TemperatureResponse
