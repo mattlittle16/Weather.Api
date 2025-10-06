@@ -195,7 +195,7 @@ public record OpenWeatherResponse
         public long? Dt { get; init; }
 
         [JsonPropertyName("precipitation")]
-        public int? Precipitation { get; init; }
+        public decimal? Precipitation { get; init; }
     }
 
     public record WeatherDescriptionChild
