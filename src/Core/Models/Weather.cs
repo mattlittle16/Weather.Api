@@ -38,7 +38,8 @@ public record WeatherResponse
             WindGusts = root.Current?.WindGust ?? 0,
             WindSpeed = root.Current?.WindSpeed ?? 0,
             UVIndex = root.Current?.Uvi ?? 0,
-            Humidity = root.Current?.Humidity ?? 0
+            Humidity = root.Current?.Humidity ?? 0,
+            RainChanceNextHour = root.Minutely?.Select(x => x.Precipitation ?? 0).Average() ?? 0
         };
 
         //Hourly
@@ -125,6 +126,8 @@ public record WeatherResponse
         public int CloudPercentage { get; set; }
 
         public decimal UVIndex { get; set; }
+
+        public decimal RainChanceNextHour { get; set; }
     }
 
     public record DailyConditionResponse
