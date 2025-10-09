@@ -11,7 +11,7 @@ namespace Infrastructure.ExternalServices;
 
 public class OpenWeatherApi : IOpenWeatherApi
 {
-    private EnvironmentSettings _environmentSettings { get; set; } 
+    private EnvironmentSettings _environmentSettings { get; set; }
     private IOpenWeatherApiRefit _client { get; set; }
     private readonly ILogger<OpenWeatherApi> _logger;
 
@@ -29,7 +29,7 @@ public class OpenWeatherApi : IOpenWeatherApi
         if (response.IsSuccessStatusCode)
         {
             var content = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<List<Geocode>>(content)![0];   
+            return JsonSerializer.Deserialize<List<Geocode>>(content)![0];
         }
         else
         {
@@ -38,10 +38,10 @@ public class OpenWeatherApi : IOpenWeatherApi
             throw new Exception(message);
         }
     }
-    
-    public async Task<Geocode> GetGeocodeZipAsync(string postalCode, string countryCode)
+
+    public async Task<Geocode> GetGeocodePostalCodeAsync(string postalCode, string countryCode)
     {
-        var response = await _client.GetGeocodeByZipAsync(postalCode, countryCode, _environmentSettings.OpenWeatherApiKey!);
+        var response = await _client.GetGeocodeByPostalCodeAsync(postalCode, countryCode, _environmentSettings.OpenWeatherApiKey!);
 
         if (response.IsSuccessStatusCode)
         {
@@ -50,8 +50,8 @@ public class OpenWeatherApi : IOpenWeatherApi
         }
         else
         {
-            _logger.LogError("geocoding by zip call failed {response}", response.StatusCode);
-            var message = $"get geocode by zip call failed {response}";
+            _logger.LogError("geocoding by postal code call failed {response}", response.StatusCode);
+            var message = $"get geocode by postal code call failed {response}";
             throw new Exception(message);
         }
     }
@@ -67,8 +67,8 @@ public class OpenWeatherApi : IOpenWeatherApi
         }
         else
         {
-            _logger.LogError("geocoding by zip call failed {response}", response.StatusCode);
-            var message = $"get geocode by zip call failed {response}";
+            _logger.LogError("reverse geocoding call failed {response}", response.StatusCode);
+            var message = $"reverse geocoding call failed {response}";
             throw new Exception(message);
         }
     }

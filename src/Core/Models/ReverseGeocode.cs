@@ -21,7 +21,7 @@ public record ReverseGeocode
 
     [JsonPropertyName("local_names")]
     public LocalName? LocalNames { get; init; }
-    
+
     public record LocalName
     {
         [JsonPropertyName("en")]

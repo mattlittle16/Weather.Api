@@ -15,7 +15,7 @@ public record Geocode
 
     [JsonPropertyName("country")]
     public string? Country { get; set; }
-    
+
     [JsonPropertyName("state")]
     public string? State { get; set; }
 }

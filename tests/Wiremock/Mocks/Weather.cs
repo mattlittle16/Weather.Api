@@ -2,7 +2,6 @@ using System.Net;
 using System.Text.Json;
 using AutoFixture;
 using Core.DTOs;
-using Core.Models;
 using WireMock;
 using WireMock.Matchers;
 using WireMock.RequestBuilders;
@@ -22,17 +21,18 @@ namespace Wiremock.Mocks
                 .Create()
                 .WithPath(new RegexMatcher("/data/3.0/onecall"))
                 .UsingGet())
-                
+
                 .RespondWith(
                     Response
                     .Create()
-                    .WithCallback(_ => {
+                    .WithCallback(_ =>
+                    {
                         return GetResponse();
                     })
                 );
         }
 
-        public ResponseMessage GetResponse() 
+        public ResponseMessage GetResponse()
         {
             var fixture = new Fixture();
             var weather = fixture.Create<OpenWeatherResponse>();

@@ -8,7 +8,7 @@ namespace Infrastructure.Interfaces
         Task<HttpResponseMessage> GetGeocodeAsync(string city, string state, string countryCode, string openWeatherApiKey);
 
         [Get("/geo/1.0/zip?zip={postalCode},{countryCode}&limit=1&appid={openWeatherApiKey}")]
-        Task<HttpResponseMessage> GetGeocodeByZipAsync(string postalCode, string countryCode, string openWeatherApiKey);
+        Task<HttpResponseMessage> GetGeocodeByPostalCodeAsync(string postalCode, string countryCode, string openWeatherApiKey);
 
         [Get("/geo/1.0/reverse?lat={latitude}&lon={longitude}&limit=1&appid={openWeatherApiKey}")]
         Task<HttpResponseMessage> ReverseGeocodeAsync(string latitude, string longitude, string openWeatherApiKey);

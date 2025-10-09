@@ -17,11 +17,12 @@ namespace Wiremock.Mocks
                 .Create()
                 .WithPath(new RegexMatcher("/geo/1.0/reverse"))
                 .UsingGet())
-                
+
                 .RespondWith(
                     Response
                     .Create()
-                    .WithCallback(_ => {
+                    .WithCallback(_ =>
+                    {
                         return GetResponse();
                     })
                 );
@@ -33,7 +34,7 @@ namespace Wiremock.Mocks
             {
                 BodyData = new BodyData
                 {
-                    BodyAsJson = new List<object> { 
+                    BodyAsJson = new List<object> {
                         new {
                            name = "Forsyth County",
                            lat = -84.1402M,

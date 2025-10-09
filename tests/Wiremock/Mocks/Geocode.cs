@@ -17,11 +17,12 @@ namespace Wiremock.Mocks
                 .Create()
                 .WithPath(new RegexMatcher("/geo/1.0/direct"))
                 .UsingGet())
-                
+
                 .RespondWith(
                     Response
                     .Create()
-                    .WithCallback(_ => {
+                    .WithCallback(_ =>
+                    {
                         return GetResponse();
                     })
                 );
@@ -33,11 +34,11 @@ namespace Wiremock.Mocks
             {
                 BodyData = new BodyData
                 {
-                    BodyAsJson = new List<object> { 
+                    BodyAsJson = new List<object> {
                         new {
                            name = "Cumming",
-                           lat = -84.1402M, 
-                           lon = 34.2073M, 
+                           lat = -84.1402M,
+                           lon = 34.2073M,
                            country = "us",
                            state = "Georgia"
                         }

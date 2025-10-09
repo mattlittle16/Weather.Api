@@ -17,7 +17,7 @@ public class GeocodeControllerTests
     [AutoMoqData]
     public async Task GetByPostalCode_ReturnsValidGeocode
     (
-        [Frozen] Mock<IWeatherService> weatherServiceMock,
+        [Frozen] Mock<IGeocodeService> geocodeServiceMock,
         [Frozen] Mock<ILogger<GeocodeController>> loggerMock,
         [MaxLength(2)]
         string countryCode,
@@ -28,8 +28,8 @@ public class GeocodeControllerTests
     {
         //Arrange 
         var validator = new GeocodeRequestValidator();
-        weatherServiceMock.Setup(x => x.GetGeocodeAsync(postalCode, countryCode)).ReturnsAsync(serviceResponse);
-        var controller = new GeocodeController(loggerMock.Object, weatherServiceMock.Object, validator);
+        geocodeServiceMock.Setup(x => x.GetGeocodeAsync(postalCode, countryCode)).ReturnsAsync(serviceResponse);
+        var controller = new GeocodeController(loggerMock.Object, geocodeServiceMock.Object, validator);
 
         //Act 
         var response = await controller.Get(new GeocodeRequestModel(null, null, postalCode, countryCode));
@@ -40,12 +40,12 @@ public class GeocodeControllerTests
         Assert.NotNull(result);
         Assert.True(((OkObjectResult)result).StatusCode == 200);
     }
-    
+
     [Theory]
     [AutoMoqData]
     public async Task GetByCityState_ReturnsValidGeocode
     (
-        [Frozen] Mock<IWeatherService> weatherServiceMock, 
+        [Frozen] Mock<IGeocodeService> geocodeServiceMock,
         [Frozen] Mock<ILogger<GeocodeController>> loggerMock,
         [MaxLength(2)]
         string state,
@@ -57,9 +57,9 @@ public class GeocodeControllerTests
     {
         //Arrange 
         var validator = new GeocodeRequestValidator();
-        weatherServiceMock.Setup(x => x.GetGeocodeAsync(city, state, countryCode)).ReturnsAsync(serviceResponse);
-        var controller = new GeocodeController(loggerMock.Object, weatherServiceMock.Object, validator);
-        
+        geocodeServiceMock.Setup(x => x.GetGeocodeAsync(city, state, countryCode)).ReturnsAsync(serviceResponse);
+        var controller = new GeocodeController(loggerMock.Object, geocodeServiceMock.Object, validator);
+
         //Act 
         var response = await controller.Get(new GeocodeRequestModel(city, state, null, countryCode));
 

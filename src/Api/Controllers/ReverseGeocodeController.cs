@@ -14,7 +14,7 @@ namespace Api.Controllers;
 [ApiController]
 [Route("[controller]")]
 [EnableRateLimiting(Constants.RateLimitPolicy)]
-public class ReverseGeocodeController(ILogger<ReverseGeocodeController> logger, IWeatherService weatherService, IValidator<ReverseGeocodeRequestModel> validator) : ControllerBase
+public class ReverseGeocodeController(ILogger<ReverseGeocodeController> logger, IGeocodeService geocodeService, IValidator<ReverseGeocodeRequestModel> validator) : ControllerBase
 {
     [HttpGet]
     [ProducesResponseType(typeof(ReverseGeocode), StatusCodes.Status200OK)]
@@ -26,7 +26,7 @@ public class ReverseGeocodeController(ILogger<ReverseGeocodeController> logger, 
 
         if (validatorResult.IsValid)
         {
-            return Ok(await weatherService.ReverseGeocodeAsync(requestModel.Lat!, requestModel.Lon!));
+            return Ok(await geocodeService.ReverseGeocodeAsync(requestModel.Lat!, requestModel.Lon!));
         }
         else
         {

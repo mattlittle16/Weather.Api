@@ -1,17 +1,6 @@
-using Api.ApplicationLogic;
-using Api.Configuration;
 using Api.Middleware;
 using Core.Configuration;
 using Core.Constants;
-using Core.Entities;
-using Core.Interfaces;
-using Infrastructure.ExternalServices;
-using Infrastructure.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using Refit;
-using FluentValidation;
-using Api.Validators;
-using Core.RequestModels;
 using Api.Startup;
 using Serilog;
 using Serilog.Events;
@@ -44,7 +33,7 @@ builder.Services.AddSwaggerGen(options =>
         Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey,
         Description = "API Key needed to access the endpoints. X-API-KEY: {API Key}",
     });
-    
+
     options.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
     {
         {

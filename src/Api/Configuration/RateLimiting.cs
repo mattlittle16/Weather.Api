@@ -31,7 +31,7 @@ public class HostRateLimiterPolicy : IRateLimiterPolicy<string>
     (context, _) =>
     {
         context.HttpContext.Response.StatusCode = 429;
-        context.HttpContext.Response.ContentType = "text/plain";   
+        context.HttpContext.Response.ContentType = "text/plain";
         context.HttpContext.Response.WriteAsync(JsonSerializer.Serialize(new ExceptionResponse { Message = "Too many requests" }));
 
         return new ValueTask();
@@ -42,8 +42,9 @@ public static class ConfigureRateLimit
 {
     public static void AddRateLimit(this IServiceCollection services)
     {
-        services.AddRateLimiter(options => {
-            options.AddPolicy<string, HostRateLimiterPolicy>(Constants.RateLimitPolicy);            
-        });        
+        services.AddRateLimiter(options =>
+        {
+            options.AddPolicy<string, HostRateLimiterPolicy>(Constants.RateLimitPolicy);
+        });
     }
 }

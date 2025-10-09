@@ -22,13 +22,13 @@ public class DailyRequestLimitMiddleware
 
     public async Task Invoke(HttpContext context)
     {
-        var cacheKey = DateTimeOffset.UtcNow.Date.ToString("MM-dd-yyyy")+"openweatherhits";
+        var cacheKey = DateTimeOffset.UtcNow.Date.ToString("MM-dd-yyyy") + "openweatherhits";
         if (_cache.TryGetValue(cacheKey, out int hits))
         {
             hits++;
             _cache.Set(cacheKey, hits, TimeSpan.FromHours(24));
         }
-        else 
+        else
         {
             hits = 1;
             _cache.Set(cacheKey, hits, TimeSpan.FromHours(24));
@@ -41,6 +41,6 @@ public class DailyRequestLimitMiddleware
         else
         {
             await _next(context);
-        }        
+        }
     }
 }

@@ -1,9 +1,8 @@
 using Core.DTOs;
-using Core.Models;
 
 namespace Core.Interfaces;
 
-public interface IWeatherService
+public interface IWeatherRepository
 {
     Task<OpenWeatherResponse> GetWeatherAsync(string latitude, string longitude);
 }

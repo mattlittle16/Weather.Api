@@ -21,7 +21,7 @@ public record WeatherResponse
 
     public CurrentConditionResponse CurrentCondition { get; set; }
     public List<HourlyConditionResponse> HourlyConditions { get; set; }
-    public List<DailyConditionResponse> DailyConditions { get; set; } 
+    public List<DailyConditionResponse> DailyConditions { get; set; }
 
     private void MapWeatherRootToModel(OpenWeatherResponse root)
     {

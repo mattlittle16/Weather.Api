@@ -1,21 +1,24 @@
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 as base
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 WORKDIR /build
 
-RUN dir -s    
+# Copy Core project (dependency)
+COPY ["src/Core/", "src/Core/"]
 
-COPY ["./src/Core/", "Core/"]
-COPY ["./src/Wiremock/", "Wiremock/"]
+# Copy Wiremock project
+COPY ["tests/Wiremock/", "tests/Wiremock/"]
 
-RUN dotnet restore "Wiremock/Wiremock.csproj"
+# Restore dependencies
+RUN dotnet restore "tests/Wiremock/Wiremock.csproj"
 
-RUN dotnet publish "Wiremock/Wiremock.csproj" -c Debug -o out  
+# Publish the application
+RUN dotnet publish "tests/Wiremock/Wiremock.csproj" -c Release -o out  
 
 
 
-FROM base as Wiremock
+FROM base AS wiremock
 WORKDIR /app
 COPY --from=build-env /build/out ./
 

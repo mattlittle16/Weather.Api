@@ -8,11 +8,11 @@ namespace Api.Controllers;
 [Route("[controller]")]
 [EnableRateLimiting(Constants.RateLimitPolicy)]
 public class HealthCheckController() : ControllerBase
-{        
+{
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public IActionResult Get()
-    {              
-       return Ok();
-    }    
+    {
+        return Ok();
+    }
 }

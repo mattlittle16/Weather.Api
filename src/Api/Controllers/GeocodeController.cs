@@ -14,7 +14,7 @@ namespace Api.Controllers;
 [ApiController]
 [Route("[controller]")]
 [EnableRateLimiting(Constants.RateLimitPolicy)]
-public class GeocodeController(ILogger<GeocodeController> logger, IWeatherService weatherService, IValidator<GeocodeRequestModel> validator) : ControllerBase
+public class GeocodeController(ILogger<GeocodeController> logger, IGeocodeService geocodeService, IValidator<GeocodeRequestModel> validator) : ControllerBase
 {
     [HttpGet]
     [ProducesResponseType(typeof(Geocode), StatusCodes.Status200OK)]
@@ -28,8 +28,8 @@ public class GeocodeController(ILogger<GeocodeController> logger, IWeatherServic
         {
             return requestModel switch
             {
-                { PostalCode: not null and not "" } => Ok(await weatherService.GetGeocodeAsync(requestModel.PostalCode!, requestModel.CountryCode!)),
-                { City: not null and not "" } => Ok(await weatherService.GetGeocodeAsync(requestModel.City!, requestModel.State!, requestModel.CountryCode!)),
+                { PostalCode: not null and not "" } => Ok(await geocodeService.GetGeocodeAsync(requestModel.PostalCode!, requestModel.CountryCode!)),
+                { City: not null and not "" } => Ok(await geocodeService.GetGeocodeAsync(requestModel.City!, requestModel.State!, requestModel.CountryCode!)),
                 _ => throw new NotImplementedException()
             };
         }

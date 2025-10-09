@@ -1,6 +1,6 @@
 namespace Core.Constants;
 
-public static partial class Constants 
+public static partial class Constants
 {
     public const string CORSPolicy = "allowall";
 

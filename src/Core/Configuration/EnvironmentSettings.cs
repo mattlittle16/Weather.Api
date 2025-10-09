@@ -1,6 +1,6 @@
 namespace Core.Configuration;
 
-public class EnvironmentSettings 
+public class EnvironmentSettings
 {
     public string? OpenWeatherApiKey { get; set; }
 

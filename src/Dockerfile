@@ -8,10 +8,10 @@ COPY ["Infrastructure/", "Infrastructure/"]
 
 RUN dotnet restore "Api/Api.csproj"
 
-# Build in Release mode for production optimization
-RUN dotnet publish "Api/Api.csproj" -c Release -o out --no-restore
+# Build
+RUN dotnet publish "Api/Api.csproj" -c Debug -o out --no-restore
 
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime 
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS runtime 
 WORKDIR /app 
 
 # Add non-root user for security

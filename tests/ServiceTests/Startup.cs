@@ -7,7 +7,7 @@ using Xunit;
 [assembly: CollectionBehavior(DisableTestParallelization = true)]
 namespace ServiceTests
 {
-    public class Startup 
+    public class Startup
     {
         private IConfiguration? _configuration;
 
@@ -21,11 +21,11 @@ namespace ServiceTests
                 .AddJsonFile("appsettings.json")
                 .AddEnvironmentVariables();
             _configuration = configurationBuilder.Build();
-            
+
             var envSettings = new EnvironmentSettings();
             _configuration.GetSection("AppSettings").Bind(envSettings);
 
-        
+
             services.AddHttpClient(Constants.TestClient, options =>
             {
                 options.BaseAddress = new Uri(envSettings.Url!);
@@ -35,7 +35,7 @@ namespace ServiceTests
             {
                 AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate | DecompressionMethods.Brotli
 
-            });        
+            });
         }
-    }    
+    }
 }

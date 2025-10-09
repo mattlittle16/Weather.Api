@@ -27,7 +27,7 @@ public class WeatherController(ILogger<WeatherController> logger, IWeatherServic
         {
             return Ok(new WeatherResponse(await weatherService.GetWeatherAsync(requestModel.Lat!, requestModel.Lon!)));
         }
-        else 
+        else
         {
             return BadRequest(validatorResult.PrintErrors());
         }
