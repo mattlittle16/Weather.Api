@@ -38,7 +38,7 @@ jobs:
           -p 80:80 \
           -e ASPNETCORE_ENVIRONMENT=Production \
           -e ASPNETCORE_URLS=http://+:80 \
-          -e AppSettings__OpenWeatherMapApiKey=${{ secrets.OPENWEATHERMAP_API_KEY }} \
+          -e AppSettings__OpenWeatherApiKey=${{ secrets.OPENWEATHERMAP_API_KEY }} \
           -e AppSettings__XApiKey=${{ secrets.XAPI_KEY }} \
           -e AppSettings__OpenWeatherApiBaseUrl=${{ secrets.OPENWEATHERMAP_API_BASE_URL }} \
           weatherapi:latest
