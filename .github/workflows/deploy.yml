@@ -21,7 +21,7 @@ jobs:
     
     - name: Build Docker image
       run: |
-        docker build -t weatherapi:latest -f src/Dockerfile .
+         docker build -t weatherapi:latest ./src
     
     - name: Run new container
       run: |
