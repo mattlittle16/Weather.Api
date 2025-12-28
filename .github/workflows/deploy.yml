@@ -1,0 +1,46 @@
+name: Deploy to Homelab
+
+on:
+  push:
+    branches: [ master ]  
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, linux, ubuntu]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Stop existing container (if running)
+      run: |
+        docker stop weatherapi || true
+        docker rm weatherapi || true
+      continue-on-error: true
+    
+    - name: Build Docker image
+      run: |
+        docker build -t weatherapi:latest -f src/Dockerfile .
+    
+    - name: Run new container
+      run: |
+        docker run -d \
+          --name weatherapi \
+          --restart always \
+          -p 80:80 \
+          -e ASPNETCORE_ENVIRONMENT=Production \
+          -e ASPNETCORE_URLS=http://+:80 \
+          -e OpenWeatherMapApiKey=${{ secrets.OPENWEATHERMAP_API_KEY }} \
+          -e XApiKey=${{ secrets.XAPI_KEY }} \
+          -e OpenWeatherApiBaseUrl=${{ secrets.OPENWEATHERMAP_API_BASE_URL }} \
+          weatherapi:latest
+    
+    - name: Verify deployment
+      run: |
+         sleep 5
+         curl -f http://localhost/healthcheck || exit 1
+
+    - name: Clean up old images
+      run: |
+        docker image prune -f
