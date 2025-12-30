@@ -35,7 +35,7 @@ jobs:
         docker run -d \
           --name weatherapi \
           --restart always \
-          -p 80:80 \
+          --network app-network \
           -e ASPNETCORE_ENVIRONMENT=Production \
           -e ASPNETCORE_URLS=http://+:80 \
           -e AppSettings__OpenWeatherApiKey=${{ secrets.OPENWEATHERMAP_API_KEY }} \
