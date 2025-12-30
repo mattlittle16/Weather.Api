@@ -45,8 +45,11 @@ jobs:
     
     - name: Verify deployment
       run: |
-         sleep 5
-         curl -f http://localhost/healthcheck || exit 1
+         sleep 10
+          # Check container is running
+         docker ps | grep weatherapi || exit 1
+         # Check health from inside the container
+         docker exec weatherapi curl -f http://localhost/healthcheck || exit 1
 
     - name: Clean up old images
       run: |
